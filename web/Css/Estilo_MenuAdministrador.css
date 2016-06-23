@@ -1,0 +1,2630 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 7/07/2014, 09:55:59 AM
+    Author     : Rocio
+*/
+*{margin: 0; padding:0}
+body { font-size: 100% }
+h1 {font-size: 200% }
+
+/*@media all and (max-width:600px) {
+    body {font-size: 70%}
+}*/
+
+/*-----------------menu------------*/
+#tipoReporte{
+   
+    position: relative;
+    left:340px;
+}
+#examen{
+  
+    position: absolute;
+    margin-top: -34px;
+    margin-left: 500px;
+}
+#combo{
+    width:210px;
+}
+#comboAula{
+    width:200px;
+    display: none;
+    position: relative;
+    
+}
+#comboHorCen{
+    width:200px;
+    display: none;
+    position: relative;
+}
+#comboHorMat{
+    width:200px;
+    display: none;
+    position: relative;
+}
+#alert_params{
+    color:red;
+    position:relative;
+    
+    top: 5px;
+    display:none;
+}
+#alert_param{
+    color:red;
+    position:relative;
+    
+    top: -10px;
+    display:none;
+}
+#reportes{
+    cursor: pointer;
+}
+#reportes ul { list-style-type: none; display: none;  
+     background-color: white;
+     border:1px solid #ccc;
+     margin-top: -30px;
+     position: absolute;
+     margin-left:210px;
+         border-radius:2px;
+}
+#reportes ul li {
+ margin-top:5px;
+ margin-bottom:5px;
+ text-align: center;
+    
+}
+#reportes ul li:hover{
+    background-color: #e7e7e7;
+   
+}
+#reportes ul li a{
+    color: #333;
+    text-decoration: none;
+     cursor: pointer;
+}
+#reportes:hover ul { 
+                 display: block;
+width: 160px;
+margin-right: 2px;
+}
+
+
+
+
+/*-----------------menu------------*/
+
+.shadowbox{
+   border-radius: 20px;box-shadow: 0 0 15px 0;width:250px;
+    height:200px;position: absolute;
+}
+.spanf{
+     width:150px;
+    height: 20px;
+    font-size: 14px;
+    resize: horizontal;
+  
+    margin-top: 1%;
+    margin-left: 15%;
+      font-weight: bolder;
+      position:absolute;
+}
+#fechas{
+    position: relative;
+    left:210px;
+}
+#mensajeBD{
+    display:none;
+    color:red;
+}
+#algoc{
+     display: none;
+     font-weight: bolder;
+     
+}
+.L_casp{
+    width:220px;
+    text-align: left;
+    position:relative;
+    left:10px;
+}
+.fieldMessage{
+    position:absolute;margin-left: 40px;color:red;font-size:10px;
+}
+.hidebox{
+    position: absolute;background-color:white;border: 3px solid #337AB7;display:none;
+    margin-left:20px;margin-top: 10px;width:300px;background-color: white;z-index: 1000;
+}
+.hidebox2{
+    position: absolute;background-color:white;border: 3px solid #337AB7;display:none;
+    margin-left:20px;margin-top: 10px;width:300px;background-color: white;z-index: 1000;
+}
+.cantAsp{
+    height:18px;
+    width:180px;
+    font-size:10px;
+    cursor: pointer;
+    
+}
+
+#BackArrow{
+    position:absolute;
+    margin-left: 800px;
+    margin-top:-40px;
+    width:40px;
+    height: 40px;
+    background-image: url('../Imagenes/flecha2.png');
+       background-size: 40px 40px;
+    background-repeat: no-repeat;
+}
+#BackArrow:hover{
+    
+    background-image: url('../Imagenes/flecha.png');
+}
+.titulo{
+    margin-left: 2%;
+    color: white;
+    font-size: 200%;
+    text-align: left;
+}
+
+#CenevalConfirmacion{
+    font-size:100%;
+}
+h1{
+
+    font-size: 100%;
+    font-family: "Arial", sans-serif, serif;
+    font-style: initial;
+    position: relative;
+    text-align: center;
+}
+
+.Contenido_menu{
+    max-width: 72%;
+    margin-top: -2%;
+    left:14%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #0099FF;
+    border-radius: 8.5px;  
+    position:relative;
+    min-height: 255px;
+    min-width: 533px;
+    overflow: hidden;
+}
+
+#menuPrincipal{
+    margin-left: 14%;
+    max-width: 72%;
+    min-width: 533px;
+}
+
+
+#Contenedor_Bienvenido{
+
+    margin: 2% 2% 2% 2%;
+    position: relative;
+}
+
+#Contenedor_Bienvenido h3{
+
+    font-family: Gill Sans, Verdana;
+    text-align: left;
+    font-size: 100%;
+
+}
+
+#imagen_inicio{
+
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-bottom: 3%;
+
+}
+
+#MargenYEncabezado{
+    width: 100%;
+    height: 100%;
+    margin-bottom: 2%;
+
+    box-shadow: 0 5px 15px 1px rgba(0,0,10,0.6),
+        0 0 200px 1px rgba(255,255,255,0.5); 
+}
+
+
+#Pestanas_info, #mensajeInicio,
+#Pestanas_infoEscuelas{
+    border: 1px solid #c5dbec;
+    border-radius: 8.5px; 
+
+
+}
+
+#mensajeInicio, #introEscuelas{
+    font-family: Gill Sans,Verdana;
+    font-size: 100%;
+    text-align: center;
+}
+
+#introEscuelas{
+    margin-top: 2%;   
+}
+#Caja_busquedaNotif{
+    width: 100%;
+    height: 20%; 
+    font-size: 135%;
+}
+#Caja_busquedaNotif{
+    overflow: hidden;
+}     
+#Caja_busqueda,#Caja_busquedaDPLP{
+    border: 1px solid #c5dbec;
+    width: 100%;
+    height: 20%;
+}
+
+#Caja_busquedaDPLP{
+    overflow: hidden;
+}
+
+
+.tabs {
+    width:100%;
+    display:inline-block;
+}
+
+/*----- Tab Links -----*/
+/* Clearfix */
+.tab-links:after {
+    display:block;
+    clear:both;
+    content:'';
+}
+
+.tab-links li {
+    margin:0px 3px;
+    float:left;
+    list-style:none;
+
+}
+
+.tab-links a {
+    padding:10px 9px;
+    display:inline-block;
+    border-radius:3px 3px 0px 0px;
+    background:#F2F2F2;
+    font-size:medium;
+    font-weight:600;
+    color:#4c4c4c;
+    transition:all linear 0.15s;
+    text-decoration: none;
+}
+
+.tab-links a:hover {
+    background:#a7cce5;
+    text-decoration:none;
+}
+
+li.active a, li.active a:hover {
+    background:#50ABF0;
+    color:#fff;
+}
+.btn_style2 {
+    
+	-moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
+	background:-moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+	background:-webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+	background:-o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+	background:-ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+	background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
+	background-color:#007dc1;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:1px solid #124d77;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:3px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+}
+.btn_style2:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
+	background:-moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:-webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:-o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:-ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
+	background-color:#0061a7;
+}
+.btn_style2:active {
+	position:relative;
+	top:1px;
+}
+
+/*----- Content of Tabs -----*/
+.tab-content {
+    padding:15px;
+    border-radius:3px;
+    box-shadow:-1px 1px 1px rgba(0,0,0,0.15);
+    /*background:#0099FF;*/
+}
+
+.tab {
+    display:none;
+
+}
+
+.tab.active {
+    display:block;
+    background:#0099FF;
+}
+#Caja_busqueda,#Caja_busquedaDPLP{
+    width: 100%;
+    height: 50%;
+    font-size: 135%;
+   
+}
+
+#folioCajaBusqueda{
+    width: 30%;
+    height: 35%;
+    border: solid;
+    border-color: orange;
+    border-width: 1.5px;
+    text-align: center;
+    border-radius: 8.5px; 
+    background-color: white;
+    float: left;
+}
+
+#folioCaja{
+    width: 23%;
+    height: 35%;
+    border: solid;
+    border-color: orange;
+    border-width: 1.5px;
+    text-align: center;
+    border-radius: 8.5px; 
+    background-color: white;
+    float: right;
+    margin-right:70px;
+}
+
+#solicitud, #cajaFecha{
+    width: 15%;
+    height: 35%;
+   
+    background-color: white;
+    float: left;
+}
+
+#cajaFecha{
+    margin-left:3%;
+}
+/*#folioCajaDPLP{
+    width: 25%;
+    height: 35%;
+    border: solid;
+    border-color: orange;
+    border-width: 1.5px;
+    text-align: center;
+    border-radius: 8.5px; 
+    background-color: white;
+    float: left;
+}*/
+#registroCen{
+    width: 25%;
+    height: 35%;
+    border: solid;
+    border-color: orange;
+    border-width: 1.5px;
+    text-align: center;
+    border-radius: 8.5px; 
+    background-color: white;
+    margin-top: 17px;
+    float: left;
+}
+
+#fs_referencia{
+    width: 90%;
+    height: 35%;
+    border: solid;
+    border-color: orange;
+    border-width: 1.5px;
+    text-align: right;
+    border-radius: 8.5px; 
+    background-color: white;
+    margin-left: 3%;
+    margin-top: 5%;
+}
+
+#cajaPrefichaDPLP,
+#cajaFechaDPLP,
+#folioCajaDPLP
+{ width: 25%;
+  height: 35%;
+  border-width: 1.5px;
+  text-align: center;
+  border-radius: 8px; 
+  background-color: white;
+  float:left;  
+box-shadow: 0 0 5px 0;
+
+}
+#cajaNotifFicha{
+    margin-left:100px;
+   
+}
+#cajaNotifCen{
+    display:none;
+    margin-left:680px;
+    
+}
+#cajaNotifPago{
+    display:none;
+     margin-left:540px;
+}
+#cajaReg{
+    display:none;
+     margin-left:260px;
+}
+#cajaPref{
+    display:none;
+     margin-left:400px;
+}
+#cajaRen{
+    margin-left: 120px;
+    margin-top: 38px;
+}
+#cajaNotifFicha,
+#cajaNotifPago,
+#cajaNotifCen,
+#cajaPref,#cajaRen,#cajaReg
+{ width: 120px;
+  position: absolute;
+  height: 45px;
+  
+border-radius: 8px;box-shadow: 0 0 5px 0;
+  text-align: left;
+
+ 
+  
+
+}
+
+#folioCajaBusqueda{
+    float:left;
+    margin-left: 18%;
+    margin-bottom:2%;
+}
+
+
+#boton_asigFicha,#boton_asigFichaCENEVAL
+{
+    width: 20%;
+    height: 35%;
+    text-align: center;
+    border:none;
+    float:left;
+}
+
+#caja_preficha{
+    width: 200px;
+    height: 30px;
+    padding-top: 0px;
+}
+
+#etq_asigFecha{
+    width: 400px;
+    height: 50px;
+    border: 1px solid #0099FF;
+    text-align: center;
+    border-radius: 8.5px; 
+    background-color: white;
+    position: relative;
+}
+#tabs_1,#tabs_2,#tabs_3,#contenedor_pestanas{
+    border: 1px solid #0099FF;   
+    background: white; }
+
+
+#contenedor_pestanas{
+    display:none;
+}
+#ParaAlinear{
+    margin-bottom: 5%;
+}
+
+#et_periodo{
+    width: 33%;
+    float: left;
+    display:none;
+    margin-top:5px;
+    
+    text-align: center;
+   
+    position: absolute;
+    margin-left:60%;
+    font-size: 100%;
+
+}
+#prefichaDPLP{
+    font-weight: lighter;
+}
+#fichaDPLP{
+    font-weight: lighter;
+}
+#prefichaDPLP,#folioDPLP,#fichaDPLP,caja_fichaDPLP,#caja_folioDPLP,#caja_folio,#folio,#noSolicitud,#caja_noSolicitud{
+    margin-bottom: 5%;
+    margin-right: 1%;
+}
+#CE,#daB_fs{
+    background-color: white;
+    border: medium none;
+    color: orange;
+    font-size: 100%;
+    height: 70%;
+    margin-left: 30%;
+    margin-top: 0;
+    position: relative;
+    text-align: center;
+    width: 24%;
+}
+
+#datosDomicilio,
+#datosSocioE,
+#datosCE{
+    text-align: center;
+    color: orange;
+}
+
+
+
+#boton_asigFicha,#boton_asigFichaCENEVAL{
+    margin-left: 1%;
+    margin-top: 8%;
+    float:left;
+} 
+
+#contenedorInterno_DPPago{
+   
+    border-radius: 20px;
+    box-shadow: 0 0 15px 0;
+    text-align: center;
+    margin: 0% 9% 2% 9%;
+ 
+    overflow: hidden;
+}
+#contenedorInterno_Notif{
+    border-radius: 20px;
+    box-shadow: 0 0 15px 0;
+    text-align: center;
+    margin: 0% 9% 2% 9%;
+ 
+    overflow: hidden;
+}
+
+#contenedor_datosAlu,#contenedorDatosSE,#contenedorEmergencia{   
+
+    border: 1px solid orange; 
+    text-align: center;    
+    border-radius: 100px; 
+    background-color: white;
+    overflow: hidden;
+}
+
+#contenedorDatosSE{
+    margin-top:2%;
+}
+
+.etqueta_dp{
+    float: left;
+    font-size: 88%;
+    margin-top: 5%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 51%;
+}
+
+.etqueta_Dependientes{
+    float: left;
+    font-size: 88%;
+    margin-top: 5%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 80%;
+}
+
+.etqueta_dpNuevo{
+    float: left;
+    font-size: 95%;
+    margin-top: 7%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 51%;
+}
+.etqueta_opsCarreras{
+    float: left;
+    font-size: 88%;
+    margin-top: 3%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 51%;
+}
+
+.etqueta_dpCURP{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 16.5%;  
+    margin-top: 7%;
+}
+
+
+.etqueta_dpPago{
+    text-align: right;
+    padding-top: .1em;
+    padding-right: .25em; 
+    margin-top: 5%;
+    font-weight: normal;
+    width: 33%;
+}
+
+
+#sectionBusquedaDPerechoDPLP{
+    width: 100%;
+}
+
+#fs_busquedaDPerechoDPLP{
+    width: 83%;
+}
+.etqueta_dpPagoSeg{
+    text-align: right;
+    padding-top: .1em;
+    padding-right: .25em; 
+    margin-top: 5%;
+    font-weight: normal;
+    width: 29%;
+}
+
+.etqueta_dpPago3{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    margin-top: 2%;
+    font-size: 60%; 
+}
+
+.etqueta_dpPago4{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 32%;  
+    margin-top: 2%;
+    font-size: 60%; 
+}
+
+.etqueta_dpPago1{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 32%;  
+    margin-top: 6%;
+    font-size: 60%;
+}
+
+
+
+.etqueta_telefonos{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 52%;  
+    margin-top: 8%;
+}
+#etiqueta_preficha{
+     font-weight: lighter;
+}
+#folioDPLP{
+    text-align: left;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 71%;;  
+    margin-top: 8%;
+    font-size: 87%;
+    font-weight: lighter;
+    margin-left: 3%;
+}
+.etiqueta_sol{
+    font-size: 8px;
+}
+.etiqueta_folios2{
+    float: left;
+    font-size: 87%;
+    margin-left: 3%;
+    margin-top: 10%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 50%;
+
+}
+.etiqueta_foliosN{
+    float: left;
+    font-size: 69%;
+    margin-left: 5%;
+    margin-top: 6px;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: justify;
+    width: 60%;
+
+}
+.etiqueta_folios{
+    float: left;
+    font-size: 69%;
+    margin-left: 3%;
+    margin-top: 10%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 50%;
+
+}
+.etiqueta_folios4{
+    float: left;
+    font-size: 10px;
+    margin-left: 3%;
+    margin-top: 10%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 50%;
+
+}
+
+.etiqueta_foliosNvaEtqCen{
+    float: left;
+    font-size: 70%;
+    margin-left: 3%;
+    margin-top: 8%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 39%;
+}
+
+.etiqueta_FichaConsultar{
+    float: left;
+    font-size: 70%;
+    margin-left: 3%;
+    margin-top: 8%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 20%;
+
+}
+
+.etiqueta_Nsolicitud{
+    float: left;
+    font-size: 70%;
+    margin-left: 3%;
+    margin-top: 8%;
+    padding-right: 0.25em;
+    padding-top: 0.1em;
+    text-align: right;
+    width: 58%;
+
+}
+
+.tamano_cajas_textoNuevo{
+    float: left;
+    max-width: 48%;
+    max-height: 25%;
+    margin-top: 8%;
+    width: 100%;
+}
+
+.tamano_cajas_texto,.opciones{
+    float: left;
+    max-width: 49%;
+    max-height: 25%;
+    margin-top: 5%;
+    width: 100%;
+}
+
+.selectAnio{
+    float: left;
+    margin-top: 5%;
+    width: 18%;
+}
+.selectMes{
+    float: left;
+    margin-top: 5%;
+    width: 16%;
+}
+.selectDia{
+    float: left;
+    margin-top: 5%;
+    width: 12%;
+}
+
+.selectDependiente{
+    float: left;
+    max-width: 10%;
+    max-height: 25%;
+    margin-top: 5%;
+    width: 100%;
+}
+.viveConClass{
+    float: left;
+    max-width: 49%;
+    max-height: 25%;
+    margin-top: 5%;
+    width: 30%;
+}
+
+.tamano_cajas_textoCURP{
+    float: left;
+    max-width: 16%;
+    max-height: 25%;
+    margin-top: 7%;
+    width: 100%
+}
+
+
+.Selects_socioeconomicos{
+    float: left;
+    max-width: 40%;
+    width: 100%;
+    max-height: 25%;
+    margin-top: 3%;
+}
+
+.tamano_cajas_textoBusqueda{
+    float: left;
+    width: 38%;
+    max-height: 25%;
+    margin-top:6%;
+}
+
+.tamano_cajas_textoBusqueda1{
+    /*float: left;*/
+    /*    width: 36%;*/
+    max-height: 25%;
+    /*max-width: 77%;*/
+    width: 43%;
+    margin-top: 5%;
+}
+
+#etq_carreraDPLP{
+    margin-bottom: 2%;
+}
+
+.tamano_cajas_textoBusquedaSeg{
+    /*float: left;*/
+    /*    width: 36%;*/
+    max-height: 25%;
+    /*max-width: 77%;*/
+    width: 68%;
+    margin-top: 5%;
+}
+
+.tamano_cajas_textoBusqueda5{
+    float: left;
+    width: 38%;
+    max-height: 25%;
+    margin-top: 2%;
+}
+
+.tamano_cajas_textoBusqueda3{   
+    float: left;
+    width: 38%;
+    max-height: 25%;
+    margin-top: 2%;
+}
+
+
+.etqueta_prueba{    
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 18%;  
+    margin-top: 4%;
+    font-size: 60%;
+
+}
+
+.cajasUltima, .Selects_Ultimos{
+    float: left;
+    max-width: 22%;
+    max-height: 25%;
+    margin-top: 3%;
+}
+
+.etqueta_ultima{    
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 27%;  
+    margin-top: 3%;
+    font-size: 60%;
+
+}
+
+.tamano_cajas_textoFolios{
+    float: left;
+    margin-top: 7%;
+    max-height: 25%;
+    max-width: 29%;
+}
+.searchAlumn{
+    float: left;
+    margin-top: 15px;
+    max-height: 20px;
+    max-width: 50px;;
+}
+
+
+.tamano_cajas_textoNvoCeneval{
+    float: left;
+    max-width: 51%;
+    max-height: 25%;
+    margin-top: 7%;
+
+}
+
+
+.tamano_cajas_textoFichaNva{
+    float: left;
+    max-width: 55%;
+    max-height: 25%;
+    margin-top: 7%;
+    margin-bottom:5%;
+
+}
+
+.tamano_cajas_textoNSolicitud{
+    float: left;
+    max-width: 31%;
+    max-height: 25%;
+    margin-top: 7%;
+
+}
+#caja_referencia{
+    position: relative;
+    left:75px;
+}
+#caja_referencia{
+    width: 33%;
+    max-height: 25%;
+    margin-top: 2%;
+    margin-right: 11%;
+}
+
+#contenedorDatosPersonales,#contenedorEscuelaPro{
+    border: 1px solid #E0E0E0; 
+    width: auto;
+    height: auto;
+    overflow:hidden;
+
+}
+
+#contenedorDatosPersonales{
+    margin-top: 1.5%;
+    margin-left: 1%;
+    margin-right: 1%;
+
+}
+#contenedorEscuelaPro{
+    margin-bottom: 8%;
+    margin-left: 1%;
+    margin-right: 1%; 
+}
+.etq_titulos{
+    font-size: 20px;
+    color :orange;
+    border: 1px solid #E0E0E0; 
+
+}
+
+#dp_busqueda,#dp_busquedaDPLP{
+    margin-top: 2%;
+    font-size: 20px;
+    color :orange;
+}
+
+
+
+#etiqueta_datosExamen,
+#caja_datosExamen{
+    margin-top: 2%;
+
+}
+#caja_datosExamen{
+ position: relative;
+ left:75px;
+}
+#caja_datosExamenMate{
+   left:70px;
+   top:-25px;
+    position: relative;
+}
+#etiqueta_datosExamenMate{
+   margin-left: -460px;
+   margin-top: -25px;
+   width:500px;
+    position:absolute;
+}
+
+#dp_izquierdo,#central,#observaciones,#Derecha,
+#fs_dpIzquierdo,#fs_dpCentral,#fs_dpDerecho,
+#fs_dpIzquierdo1,#fs_dpCentral1,#fs_DIzquierda,
+#DDerecha,#fs_SEIzquierda,#fs_SEDerecha,#carrera3,
+#carrera2,#carrera1,#fs_emDer,#fs_emIzq{
+    /*//margin-top: 3%;*/
+    float:left;
+}
+
+#central{
+    width: 35%;
+}
+
+#dp_izquierdo{
+    width: 37%;}
+
+#Derecha{
+    width: 24%;
+}
+
+#dp_izquierdoSection,
+#centralSection{
+    float:left;
+    width: 40%;
+}
+
+#DDerecha,#DIzquierda,
+#EmIzq,#EmDer{
+    float:left;
+    width: 42%;
+}
+
+#fs_DIzquierda{
+    margin-bottom:2%;
+}
+
+#fs_DIzquierda,
+#fs_dpIzquierdo,
+#fs_dpCentral, 
+#fs_dpDerecho,
+#fs_dpCentral1,
+#fs_dpDerecho1,
+#fs_dpIzquierdo1,
+#fs_DDerecha,
+#fs_SEIzquierda,
+#fs_SEDerecha,#fs_busquedaDPCentral,
+#fs_busquedaDPIzquierdo,
+#fs_busquedaDPerecho1,
+#fs_busquedaDPCentral1,
+#fs_paraCurp,
+#fs_emDer,
+#fs_emIzq
+{
+    border:none;
+    width:100%;
+    height: 400%;
+    text-align: left;
+}
+
+
+
+#fs_etqtsDer
+{
+    border:none;
+    /*width:38%;*/
+    float: left;
+    text-align: right;
+}
+
+#fs_busquedaDPerecho,
+#fs_busquedaDPIzquierdo11{
+    border:none;
+    width:47%;
+    float: left;
+    text-align: right;
+}
+
+
+#fs_DPDerechoCampos,
+#fs_etqtsIzqCen,
+#fs_camposDer{
+    border:none;
+    width:50%;
+    float: left;
+    text-align: right;
+}
+
+
+#fs_etqtsDerCen{
+    border:none;
+    width:50%;
+    /*height: 400%;*/
+    float: left;
+    text-align: right;
+}
+
+#carrera1,#carrera2, #carrera3 
+
+{
+    border:none;
+    width:78%;
+    height: 400%;
+    text-align: left;
+}
+
+
+#sectionBusquedaDPerecho,
+#sectionbusquedaDPCentral,
+#sectionbusquedaDPIZquierdo,
+#sectionDPerecho1,#sectionDPCentral1{
+    width:100%;
+    float:left;
+}
+
+#sectionBusquedaDPerechoDPLP,
+#sectionCentralDP,
+#sectionDerechaDP{
+    float:left;
+}
+
+
+#fs_busquedaDPerecho1,
+#fs_busquedaDPCentral,#fs_busquedaDPIzquierdo{
+    float:left;
+    margin-bottom: 12%;
+}
+
+#fs_busquedaDPerecho{
+    float:left;
+    margin-bottom: 5%;
+}
+
+#fs_busquedaDPIzquierdo{
+    float:left;
+    margin-bottom: 5%;
+    margin-right: 2%;
+}
+
+#fs_busquedaDPCentral1{
+
+    margin-bottom: 3%;
+}
+
+
+#fs_dpCentral1{
+    width: 100%;
+}
+
+#fs_busquedaDPIzquierdo{
+
+    margin-bottom: 13%;
+}
+
+/*#fs_dpDerecho{
+    margin-bottom: 3%;
+    width: 66%;
+}*/
+
+#fs_dpDerecho1{
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-bottom: 10%;
+}
+
+
+
+#etq_observaciones{
+    margin-top: 10%;
+}
+#caja_observaciones{
+    margin-left: 20%;
+    margin-right: 3%;
+    max-width: 491px; 
+    max-height: 102px;
+    min-width: 60px;
+    min-height: 60px;
+}
+
+#caja_datosExamen, #caja_datosExamenMate{
+    width: 33%;
+    height: 60%;
+    margin-right: 11%;
+    max-height: 40%;
+}
+
+#etiquetas_superior{
+    margin-left:3%;
+    overflow: hidden;
+}
+
+/*#etq_am, #cajaAM{
+    margin-top:11.5%;
+
+}*/
+
+#etq_en,#cajaEdo{
+    margin-top:7%;
+}
+
+
+
+#etq_municipio,#cajaMunicipio{
+    margin-top: 5.5%;
+}
+
+
+
+/*#etq_nombre,#cajaNombre{
+    margin-top:16%
+}*/
+
+#boton_guardar{
+    margin-top: 3%;
+    text-align: center;
+    margin-left : 0;
+}
+#boton_busqueda1,#boton_busqueda2,#boton_busqueda3{
+    margin-top:15px;
+}
+.botonsillos{
+    background: white;
+    border: 3px solid cornflowerblue;
+    color: orange;
+    font-size: 100%;
+    height: 25%;
+    width: 16%;
+    cursor: pointer;
+
+}
+
+.botonsillosBloqueados{
+    background: white;
+    border: 3px solid cornflowerblue;
+    color: orange;
+    font-size: 100%;
+    height: 25%;
+    width: 25%;
+    cursor: pointer;
+}
+
+
+#botonAsignarCENEVAL{
+    background: cornflowerblue;
+    border: 3px solid cornflowerblue;
+    color: orange;
+    font-size: 100%;
+    height: 100%;
+    width: 100%;  
+    margin-left: 18%;
+    margin-top:1%;
+}
+#fs_DDerecha{
+
+    margin-bottom: 12%;
+}
+
+#fs_SEDerecha{
+
+    margin-bottom: 5%;
+    /*width:50%;*/
+}
+
+
+#SEIzquierda,
+#SEDerecha{
+    width:42%;
+    float:left;
+}
+
+#fs_beca{
+    border: none; 
+    margin-left: 6%;
+    margin-right: 4%;
+    margin-top: 4%;
+
+}
+#hidden_acept{
+    display:none;
+}
+#enviarCorreos,#btn_cancelarNotif{
+    display:none;
+}
+
+.etqueta_beca{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    margin-bottom: 2%;
+    margin-top: 1%;
+    margin-left: 14.6%;
+    font-size: 78%;
+}
+
+#datosSocioMargen,
+#datosSocioMargen2{
+    border: none; 
+    overflow:hidden;
+}
+
+.tamano_beca{
+    float: left;
+    margin-bottom: 2%;
+    max-height: 25%;
+    margin-top: 1%;
+}
+
+
+#etq_cantidad{
+    margin-top: -5%;
+    margin-left: 22%;
+}
+
+.etqueta_dp1{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 52%;  
+    margin-top: 6%;
+    font-size: 88%;
+
+}
+
+
+
+.tamano_cajas_texto1{
+    float: left;
+    max-width: 30%;
+    max-height: 25%;
+    margin-top: 7%;
+    width: 100%;
+}
+
+
+#contendorDomicilio{
+    overflow: hidden;
+    border: 1px solid orange; 
+    text-align: center;
+    margin-top: 5%;
+    border-radius: 42px; 
+    background-color: white;
+}
+
+.etqueta_dp2{
+    text-align: right;
+    float:left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 52%;  
+    margin-top: 8%;
+    font-size: 97%;
+
+}
+#etq_municipio{
+    font-size: 83%;
+}
+
+#EContacto{
+    margin-top: 20%;
+}
+
+
+.tamano_cajas_texto2{
+    max-width: 40%;
+    max-height: 25%;
+    margin-top: 8%;
+    width: 100%;
+
+}
+
+.tamano_cajas_texto21{
+    max-width: 40%;
+    max-height: 25%;
+    margin-top: 8%;
+    width:100%;
+}
+
+
+
+
+#TipoDeBusqueda,#TipoDeBusqueda1,#TipoDeBusqueda2{
+    width: 70%;
+    height: 50%;
+    font-size: 100%;
+    resize: horizontal;
+    border: 1px solid #c5dbec;
+    margin-top: 1%;
+    margin-left: 15%;
+}
+
+#busqueda_contenedor{
+    border: none;
+    margin-top: 1%;
+}
+
+
+#ingresar{
+    width: 90%;
+    height: 50%;
+    font-size: 100%;
+    resize: horizontal;
+    border: 1px solid #c5dbec;
+    margin-top:3%;
+    margin-left: 5%;
+
+}
+
+.tamano_cajas_texto3{
+    float: left;
+    max-width: 10%;
+    max-height: 25%;
+    margin-top: 2%;
+}
+
+.tamano_cajas_texto4{
+    float: left;
+    width: 60%;
+    max-height: 50%;
+    margin-top: 2%;
+}
+
+.etqueta_dp3{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    /*width: 29%;*/  
+    margin-top: 2%;
+    /*font-size: 60%;*/
+}
+
+.etqueta_carrera{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 30%;  
+    margin-top: 2%;
+    font-size: 60%;
+}
+
+.etq_graficas{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 75%;  
+    margin-top: 2%;
+    font-size: 59%;
+    font-weight: 900;
+    color:#FF7010;
+}
+.etq_graficas1{
+    text-align: left;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    margin-top: 2.3%;
+    font-size: 70%;
+    font-weight: 900;
+    color:#FF7010;
+    margin-left: 1%;
+}
+
+
+
+#fs_busqueda,#fs_busquedaCURP,#fs_busquedaFicha,#fs_busquedaCarrera{
+    border: none;
+    margin: 2%;
+
+}
+
+#fs_busquedaEP,fs_busquedaDP{
+    border: none;
+    margin: 2%;
+
+}
+
+
+
+#porFicha,#porCURP,#porCarrera{
+    display: none;
+}
+
+#boton_busqueda4{
+    margin-left: 1%;
+    background:#FF6600;
+    color: #CC0000;
+    width: 20%;
+    margin-top: 1.6%;
+    margin-bottom: 1%;
+    /*font-size: 60%;*/
+    cursor:pointer;
+}
+
+.botones_busqueda{
+    background: white;
+    color: #FF7010;
+    width: 20%;
+    margin: 2%;
+    /*font-size: 60%;*/
+    cursor: pointer;
+}
+
+#busqueda_nombre{
+   
+    /*font-size: 60%;*/
+    cursor:pointer;
+}
+
+#contenedor_verCarreraConsulta,#contenedor_verCarrera,
+#contenedor_verConsulta,#contenedor_ver,
+#contenedor_consulta
+#AsignarPeriodo_contenedor,
+#ModificacionPeriodo_contenedor,
+#contenedor_manual{
+    margin-top: 5%;
+    /*background-color: #c5dbec;*/
+    max-width: 100%;
+    min-height: 100%;   
+    overflow: hidden;
+}
+
+#AsignarPeriodo_contenedor{
+    margin-top: 2%;
+}
+
+#ContDatosPersonalesPago{
+   
+    border: 1px solid #c5dbec;
+    max-width: 100%;
+    min-height: 100%; 
+    overflow:hidden;
+
+}
+
+#contenedor_manual{
+    margin-top: 2%;
+}
+
+#ModificacionPeriodo_contenedor{
+    margin-bottom: 5%;
+}
+
+#contenedor_verCarreraConsulta{
+    display: none;
+}
+
+#contenedor_verConsulta,#contenedor_verCarreraConsulta{
+    display: none;
+}
+
+#fs_verInicial,#fs_ver,#fs_verCarrera{
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border: 1px solid orange; 
+    text-align: center;
+    background-color: white;
+    max-width: 100%;
+    max-height: 90%;
+}
+
+#ver{
+/*    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 3%;
+    border: 1px solid orange; 
+
+    background-color: white;
+    max-width: 100%;
+    max-height: 90%;
+    overflow: hidden;*/
+
+    border-radius: 20px;
+    box-shadow: 0 0 15px 0;
+    text-align: center;
+    margin: 0% 9% 2% 9%;
+ 
+    overflow: hidden;
+
+}
+
+#elem_recupera{
+    border-radius: 8px;
+    box-shadow: 0 0 7px 0;
+    text-align: center;
+    margin: 0% 9% 2% 9%;
+ 
+    overflow: hidden;
+
+}
+
+#desplegarManual{
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border: 1px solid orange; 
+    text-align: center;
+    background-color: white;
+    max-width: 100%;
+    max-height: 90%;
+    border-radius:35.5px; 
+}
+
+#asignarPaeriodo{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border: 1px solid orange; 
+    text-align: center;
+    background-color: white;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius:35.5px; 
+}
+
+#confirmarPeriodo{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 3%;
+    margin-bottom: 10%;
+    border: 1px solid orange; 
+    text-align: center;
+    background-color: white;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius:35.5px; 
+}
+
+
+
+.botonesPeriodo{
+    color: #FF6600;
+    width: 21%;
+    margin: 5%;
+    /*font-size: 80%;*/
+    background: white;
+    border: 1px solid #0099FF;
+}
+
+.etq_periodo{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 50%;  
+    /*margin-top: 5%;*/
+    /*font-size: 80%;*/
+    /*margin-bottom: 6%;*/
+}
+.tamano_cajas_texto5{
+
+    text-align: left;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 30%;  
+    font-size: 80%;
+}
+
+#fs_periodo,#fs_confirmacion{
+    border:none;
+}
+
+
+#confirm{
+    float: left;
+}
+
+#fondoSpin,#fondoGuardar,#fondo3
+,#fondo33,#fondo32,#emergenteManual_fondo,
+#fondoSpinEscuelas{
+    display: none;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index:1001;
+    -moz-opacity: 0.7;
+    opacity:.70;
+    filter: alpha(opacity=70);
+}
+
+#barrita_de_fondo{  
+    margin-top: 20%; 
+    margin-bottom: 20%;
+    display: none;
+    top: 0%;
+    left: 0%;
+    background-color: #c5dbec;
+    z-index:1001;
+    -moz-opacity: 0.7;
+    opacity:.70;
+    filter: alpha(opacity=70);
+    width: 100%;
+    height: auto;
+}
+
+#barrita_de_fondoEscuelas{
+    display: none;   
+    width: 100%;
+    height: auto;
+    margin-top:-10%;
+    margin-bottom: 3%;
+}
+
+#fs_dpTelper{
+    margin-top: 5%;
+}
+
+#fs_dpTelper,#fs_dpTelCasa{
+    border: none;
+}
+
+#ref,
+#etqsobreVerde{
+    font-size: 91%;
+    color:black;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+#referencia1{
+
+    color:black;
+}
+
+
+
+
+
+#emergenteGuardar{
+    display: none;
+    position: absolute;
+    left: 18%;
+    width: 66%;
+    height: 40;
+    padding: 10px;
+    border: 2px solid #FFF;
+    background: #0099ff;
+    z-index:1002;
+    overflow:visible;
+    margin-top: -42%;
+}
+
+#emergente3,#emergente33,#emergente32{
+    display: none;
+    position: absolute;
+    left: 18%;
+    width: 66%;
+    height: 15%;
+    padding: 10px;
+    border: 2px solid #FFF;
+    background: #0099ff;
+    z-index:1002;
+    overflow:visible;
+    margin-top: -42%
+}
+
+#emergente_manual{
+    display: none;
+    position: absolute;
+    margin-left: -22%;
+    z-index:1002;
+    overflow:visible;
+    margin-top: -190%;
+}
+
+
+
+#datos_emergentes
+{
+    background-color: white;
+    border: 1px solid #0033FF;
+    margin-top: 5%;
+    text-align: center;
+    color:orange;
+    font-family: "Arial", sans-serif, serif;
+}
+
+
+#emergenteReferencia,
+#fondo2{
+    margin-left:23%;
+    margin-top:10%;
+    margin-right: 23%;
+}
+
+#emergenteSobreVerde{
+    margin-left:35%;
+    margin-top:10%;
+    margin-right: 35%;
+}
+
+.etq_emergente{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 37%;  
+    margin-top: 2%;
+    font-size: 80%;
+    margin-bottom: 2%;
+}
+.etq_emergenteGuardarNombre{
+    text-align: left;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 66%;  
+    margin-top: 2%;
+    font-size: 91%;
+    margin-bottom: 2%;
+    color:black; 
+}
+
+.etq_emergenteGuardar{
+    text-align: left;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 12%;  
+    margin-top: 2%;
+    font-size: 91%;
+    margin-bottom: 2%;
+}
+.etq_emergenteGuardar1{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 30%;  
+    margin-top: 2%;
+    font-size: 90%;
+    margin-bottom: 2%;
+    color:black;    
+}
+
+.etq_emergenteGuardar2{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 28%;  
+    margin-top: 2%;
+    font-size: 91%;
+    margin-bottom: 2%;
+    color:black;    
+}
+.etq_emergenteGuardar3{
+    text-align: left;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 12%;  
+    margin-top: 2%;
+    font-size: 80%;
+    margin-bottom: 2%;
+    color:black;    
+}
+
+.etq_emergenteGuardar4{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 30%;  
+    margin-top: 2%;
+    font-size: 91%;
+    margin-bottom: 2%;
+    color:black; 
+}
+
+.etq_emergenteGuardar5{
+    text-align: left;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 50%;  
+    margin-top: 2%;
+    font-size: 91%;
+    margin-bottom: 2%;
+    color:black; 
+}
+
+.notificacion_correo{
+    text-align: right;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 77%;  
+    margin-top: 2%;
+    font-size: 80%;
+    margin-bottom: 2%;
+}
+.etq_emergente4{
+    text-align: center;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 60%;  
+    margin-top: 2%;
+    font-size: 14px;
+    margin-bottom: 2%;
+}
+.etq_emergente2{
+    
+ left:20px;
+    width: 60%;  
+   
+}
+
+.etq_emergente20{
+    text-align: left;
+   
+  
+}
+
+.etq_emergenteTitulo{
+    text-align: center;
+    float: left;
+    padding-top: .1em;
+    padding-right: .25em;
+    width: 91%;  
+    margin-top: 2%;
+    margin-left: 30px;
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 2%;
+}
+
+
+.botonesEmergente{
+    width: 21%;
+    margin: 2%;
+    font-size: 80%;
+    background: white;
+    border: 3px solid cornflowerblue;
+    color: orange;
+    margin-top: 5%;
+}
+
+.botonTerminar{
+    color: orange;
+    width: 21%;
+    margin: 2%;
+    font-size: 80%;
+    background: white;
+    border: 1px solid #0033FF;
+    margin-top: 5%;
+    display: none;
+}
+
+#fs_inicio{
+    border: none;
+    margin-top: 3%;
+}
+
+#imagen_inicio{
+    margin-bottom: 7%;
+}
+
+
+
+
+.plano {
+    height: 0.5%;
+    display: inline-block;
+    position: absolute;
+    background-color: #aeaeae;
+    vertical-align: baseline;
+    margin-top: 10%;
+    /*//margin: -3% 1% 8%;*/
+}
+
+.carreras{
+    font-family: "Arial", sans-serif, serif;
+    font-size: 65%;
+    color:#aeaeae;
+    width: 12%;
+    margin-left: 3%;
+    margin-top: 50%;
+
+}
+
+#fs_carreras{
+    border: none; 
+    /*// margin-top: -5%;*/
+    text-align: left;
+}
+
+
+#Contenedor_inicio{
+    display: none;
+}
+
+#fs_opciones{
+    border: 1px solid #0099ff;
+    margin-top: 2%;
+    margin-left: 1%;
+    margin-right: 85%;
+}
+#margenVerNotif{
+     margin-left: 1%;
+    margin-right: 1%;
+   
+    overflow:hidden; 
+}
+#margenVerDPLP,#margenVer,#margenVer1{
+    margin-left: 1%;
+    margin-right: 1%;
+    
+    overflow:hidden;
+}
+
+#margenVer1,#margenVer{
+    margin-bottom: 3%;
+    overflow:hidden;
+}
+
+
+#pago{
+    border: 1px solid #c5dbec;
+    background-color: #c5dbec;
+    margin:3% 23%;
+}
+
+#PagoProcesadoEtiqueta{
+    background-color: white;
+    color:orange;
+    margin-bottom: 2%;
+}
+
+#fs_etqBusqueda{
+    border: 1px solid #c5dbec;
+    margin-left: 1%;
+    margin-right: 1%;
+
+}
+
+#opcion1{
+    border: 1px solid #c5dbec;
+    margin:2%;
+
+}
+
+.liga{
+    color: blue;
+    text-decoration: underline;
+}
+
+.hipervinculo{
+    text-align: right;
+    width: 60%;
+    float: right;
+    padding-top: .1em;
+    padding-right: .25em;
+}
+
+.nombre{
+    text-align: left;
+    width: 10%;
+}
+
+
+#avance{
+    display: none;
+    background: url("../Imagenes/look_and_feel_azul.png") repeat-x scroll 50% 50% #5c9ccc;
+    width: 85%;
+    height: 200px;
+    margin-left: 9%;
+    border-radius: 40px; 
+    margin-top: 1%;
+}
+
+.avances_botones{
+    border-radius: 40px;
+    float: left;
+    font-size: 89%;
+    margin-left: 3%;
+    max-height: 29px;
+    max-width: 29px;
+    min-height: 25px;
+    min-width: 25px;
+    text-align: center;
+}
+
+.avances_botones2{
+    border-radius: 40px;
+    float: left;
+    font-size: 89%;
+    max-height: 29px;
+    max-width: 29px;
+    min-height: 25px;
+    min-width: 25px;
+    text-align: center;
+}
+.avances_botones1{
+
+    max-width: 40px;
+    max-height: 40px;
+    min-height: 10px;
+    min-width: 10px; 
+    border-radius: 40px;   
+    margin-left: 8%;
+    font-size: 20px;
+}
+#botonConcluido{
+    background-color: green;
+}
+#botonEnProceso{
+    background-color: red;   
+}
+#botonInconclusos{
+    background-color: grey;
+}
+#botones_pasos{
+    margin-left: 13%;
+    background-color: green;
+}
+
+#paso1{
+    margin-left: 8%;
+}
+
+#etq_letrero{
+    font-size: 76%;
+}
+
+#paso1, #paso2,
+#paso3, #paso4,
+#paso5, #paso6,
+#paso7, #paso8,
+#paso9, #paso10{
+    background-color: green;
+    transform-style: preserve-3d;
+    appearance: checkbox;
+    /*transform: rotateY(90deg) translateZ(100px);*/
+}
+
+#avance p{
+    font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+    font-size: 16px;
+    float: left;
+    margin-left: 20px;
+    text-align:right;
+    color: #000000;
+}
+
+#letrero_pasos{
+    margin-top: -3%;
+    margin-left:  4%;
+    width: 100%;  
+    font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+    padding: 2%;
+}
+
+#df{
+    background: #a7cce5;
+}
+
+#df,#ddatoss,#ece{
+    font-size: 79%;
+    height: 30%;
+    cursor: pointer;
+
+}
+
+#cajaPrefichaDPLP{
+    margin-left:9%;
+}
+
+#cajaFechaDPLP{
+    margin-left:2%;
+
+}
+
+#folioCajaDPLP{
+    margin-left: 3%;
+}
+
+#btn_canCENEVAL,#btn_aceptCENEVAL,#btn_terminarCENEVAL{
+    display:none;
+}
+
+#sobresRegistro{
+    border: none;
+    float:left; 
+    width: 6%;
+}
+
+#sobresFolio{
+    border: medium none;
+    float: right;
+    margin-right: 15px;
+    width: 6%;
+}
+
+.tooltip {
+    display:none;
+    position:absolute;
+    border:1px solid #333;
+    background-color:#161616;
+    border-radius:5px;
+    padding:10px;
+    color:#fff;
+    font-size:12px;
+    font-family: Arial;
+}
+
+#imgFolioVerde, #botonVerde, #imgnVerificado,#ImgGuardarFolio {
+    display:none;
+    cursor: pointer;
+}
+#imgFolioRojo{
+    display:none;
+}
+
+#botonVerde{
+    background-color: transparent;
+    border: none;
+    margin-left: -2%;
+}
+#caja_busqueda_mail,#caja_busqueda_curp{
+    display: none;
+}
+#opInicio,
+#liberacion,#notificacion, #asignacion,
+#segAsp,#escuelas,
+#secuencias, #periodo,
+#recPreficha, #contadorCorreo,
+#saliendo,#correcto,#errorDeCorreo{
+    cursor: pointer;
+}
+
+#paraErrorDeConcidencias,#errorDD, #errorDS,#errorCE,#errorDPLP{
+    display:none;
+    background-color: #c5dbec;
+}
+#paraError{
+    background-color: #c5dbec;
+}
+
+#imgnVerificado{ 
+    width: 18%;
+    height: 80%;
+    margin-top: 1%;
+}
+
+
+#CenevalConfirmacion{
+    background-color: transparent;
+    border: medium none;
+    width: 20%;
+    height: 20%;
+    margin-top: 3%;
+    margin-left: -4%;
+}
+
+#imgnNoRegistrado{
+    margin-top: 3%;
+    width: 13%;
+    height: 80%;
+    cursor:pointer;
+}
+
+  .btn_busqueda{
+      margin-left: 10px;
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f9f9f9), color-stop(1, #e9e9e9));
+	background:-moz-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+	background:-webkit-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+	background:-o-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+	background:-ms-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e9e9e9',GradientType=0);
+	background-color:#f9f9f9;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+	border:3px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.btn_busqueda:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #e9e9e9), color-stop(1, #f9f9f9));
+	background:-moz-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+	background:-webkit-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+	background:-o-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+	background:-ms-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%);
+	background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#f9f9f9',GradientType=0);
+	background-color:#e9e9e9;
+}
+.btn_busqueda:active {
+	position:relative;
+	top:1px;
+}
+ #imgRenmail{
+    margin-top: 6px;
+    width:  30px;
+    margin-left:3px;
+    height:  30px;
+    cursor:pointer;
+}
+#imgRegmail{
+    margin-top: 6px;
+    width: 30px;
+    margin-left:3px;
+    height:  30px;
+    cursor:pointer;
+}
+ #imgPrefmailP{
+    margin-top: 6px;
+    width:  30px;
+    margin-left:3px;
+    display:none;
+    height:  30px;
+    cursor:pointer;
+}
+ #imgPagoP{
+    margin-top: 6px;
+    width:  30px;
+    margin-left:3px;
+    display:none;
+    height:  30px;
+   
+}
+ #imgCenP{
+    margin-top: 6px;
+    width:  30px;
+    margin-left:3px;
+    display:none;
+    height:  30px;
+    cursor:pointer;
+}
+        
+#imgPrefmail{
+    margin-top: 6px;
+    width:  30px;
+    margin-left:3px;
+    height:  30px;
+    cursor:pointer;
+}
+#imgPagomail{
+    margin-top: 6px;
+    width:  30px;
+    margin-left:3px;
+    height:  30px;
+    cursor:pointer;
+}
+#imgCenmail{
+    margin-top: 6px;
+    width:  30px;
+    margin-left:3px;
+    height:  30px;
+    cursor:pointer;
+}
+#imgDisco{
+    margin-top: 6px;
+    display:block;
+    width: 13%;
+    height: 80%;
+    cursor:pointer;
+}
+#imgProhibido{
+    display: none;
+    margin-top: 3%;
+    width: 13%;
+    height: 80%;
+    
+}
+
+.pasosEtq{
+    font-size: 100%;
+    margin-left: 5%;
+    width: 50%;
+}
+
+#sctionPAsos,#sctionPasosCentral,
+#sctionPAsosDer{
+    float: left;
+    width: 30%;
+}
+
+#pasos{
+    overflow: hidden;
+    text-align: right;
+}
+
+#move{
+    margin-bottom: 3%;
+    margin-top: 13%;
+    width: 75%;
+}
+
+#ultimoMove_caja{
+    width: 45%;
+    margin-right: 4%;
+}
+
+#checkPreficha,
+#checkRegistro,
+#checkFicha,
+#checkPago,
+#checkFolio{
+    display: none;
+}
+
+#fechaInicio, #fechaFin,
+#btn_confirmar, #btn_cancelar, #btn_sig{
+    cursor: pointer;
+}
+
+#btn_confirmar, #btn_cancelar, #btn_sig{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 3%;
+}
+
+#imMail,#imSalir,#imInicio{
+    cursor: pointer;
+    float: left;
+    margin-top: -4.4%;
+    position: absolute;
+    width: 2.5%;
+    z-index: 1;
+}
+
+#imMail{
+    margin-left: 32%;
+
+}
+
+#imSalir{
+    margin-left: 28%;
+}
+
+#imInicio{
+    margin-left: 24%;
+}
+
+#imMail:hover{
+    border: solid;
+    box-shadow: 0 5px 15px 1px rgba(0,0,10,0.6),
+        0 0 200px 1px rgba(255,255,255,0.5); 
+    border-color: #0099FF;
+}
+
+
+#notifCorreos{
+    cursor: pointer;
+    font-size: 76%;
+    height: 25px;
+    margin-left: 29.4%;
+    margin-top: -15.9%;
+    position: absolute;
+    text-align: center;
+    width: 31px;
+    z-index: 1;
+}
+
+#selectEdos{
+    margin-bottom: 13%;
+}
+
+#contPestanasEscuelas{
+    border:1px solid #0099FF;
+    overflow: hidden;
+}
+
+.moveEtq{
+    width: 39%;
+}
+
+
+#text_recupera_recupera{
+    border: 1px solid #c5dbec;
+    margin-left:10%;
+    margin-right:10%;
+    text-align: center;
+}
+#caja_ficha{
+    margin-left: 4px;
+}
+#SectionReferencia{
+    margin-left: 30px;
+}
+#cajaFecha,
+#solicitud{
+    position: relative;
+    left:35px;
+    top:55px;
+}
+#cajaFecha,
+#solicitud,
+#folioCaja,
+#sobresRegistro,
+#sobresFolio{
+    margin-top: 2%;
+}
+
+#divDSLargas,
+#estPadresdiv{
+    margin-right:22%;
+    margin-left: 2%;
+    height: 30%;
+    margin-bottom:3%;
+}
+
+#aaaaaaaah{
+    margin-bottom: 2%;
+    overflow: hidden;
+    width: 100%;
+}
+
+#etq_EContacto{
+    margin-right:2%;
+}
+
+#EContacto1{
+    float: left;
+    margin-top: 5%;
+    max-height: 25%;
+    width: 31%;
+}
+
+#errorDeCorreo{
+    display: none;
+}

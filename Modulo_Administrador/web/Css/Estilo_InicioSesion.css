@@ -1,0 +1,49 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+    Created on : 5/07/2014, 07:46:41 PM
+    Author     : Rocio
+*/
+/* 
+*/
+*{margin: 0; padding: 0;}
+h1{
+    
+    font-size: 21pt;
+    font-family: "Arial", sans-serif, serif;
+    font-style: initial;
+    position: relative;
+    text-align: center;
+}
+.encabezado{
+    text-align: center; 
+}
+
+.Informacion_InicioSesion{
+    margin-top: 20px;
+    text-align: center; 
+}
+.pieDePagina{
+    text-align: center;
+    font: 14px/17px serif; 
+    color:lightslategray;
+    margin-bottom: 20px; 
+}
+
+.Boton_acceder{
+    background-color: #0066FF;
+    color: white;
+    height: 30px;
+    width: 100px;
+    font-family: "Arial", sans-serif, serif;
+    
+}
+.etiqueta_usuario{
+    margin-left: 26px;
+}
+
+.etiqueta_contrasena , .etiqueta_usuario{
+    font-family: "Arial", sans-serif, serif;  
+}
+

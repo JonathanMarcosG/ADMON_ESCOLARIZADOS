@@ -1,0 +1,40 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11/06/2015, 02:21:35 PM
+    Author     : Rocio
+*/
+
+
+.salir{
+    background-image: url("../Imagenes/salir.png");
+    background-size: 60%;
+    background-repeat: no-repeat;
+    color: transparent !important;
+    margin-top: 12%;
+    width: 60px;
+    margin-left: 2%;
+}
+
+.inicio{
+    background-image: url("../Imagenes/inicio.png");
+    background-size: 66%;
+    background-repeat: no-repeat;
+    color: transparent !important;
+    width: 50px;
+    margin-top: 14%;
+    color : #337ab7;
+}
+
+.correo{
+    background-image: url("../Imagenes/correo.png");
+    background-repeat: no-repeat;
+    background-size: 66%;
+    color: transparent !important;
+    margin-top: 12%;
+    width: 60px;
+    margin-left: 2%;
+}

@@ -1,0 +1,75 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 8/06/2015, 03:13:56 PM
+    Author     : Rocio
+*/
+
+.general{
+    float: left;
+    text-align: right;
+    border:none;
+}
+
+.tamFS{
+    width: 41%; 
+    margin-bottom: 3%;
+}
+
+.etqEscuela{
+    margin-right: 0.5%;
+}
+
+.margenEts{
+    width: 100%;
+    display:inline-block;
+    float: left;    
+    text-align: right;
+
+}
+
+.margen{
+    width: 100% 
+}
+
+#selectTurno{
+    width: 100%;
+}
+
+#setInputNomDom{
+    width: 71.5%;
+}
+
+#nomNvaEsc,#domNvaEsc{
+    width: 100%;
+}
+#btnNvaEscuela{
+    margin-top: 1%;
+    margin-right: 3%;
+}
+
+/*#nuevaEscuela{
+    font-size: 80%;
+}*/
+
+#nombreYDomNvaEsc{
+    float:left;
+    margin-left: 13%;
+    width: 80%;
+}
+
+#ladoIzqEscuelas{
+    margin-left: 13%;
+}
+
+#ladoDerEscuelas{
+    margin-right: 2%;
+}
+
+#cajaCCT{
+    float: left;
+    width: 100%;
+}

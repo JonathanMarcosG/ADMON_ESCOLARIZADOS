@@ -1,0 +1,79 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 3/06/2015, 12:48:39 PM
+    Author     : Rocio
+*/
+
+#SelecionaClave{
+    margin-top: -46.8%;
+    overflow: hidden;
+    padding: 10px;
+    border: 2px solid #FFF;
+    background: #FFF;
+    margin-left:-2%;
+    width: 101%;
+}
+
+
+#content{
+    display: none;
+}
+
+#divElEdo{
+    margin-top: 5%;
+    margin-left:10%;
+    margin-right:10%;
+    text-align: center;
+}
+
+#margendeEdos{
+    border: 1px solid #c5dbec;
+    text-align: center;
+}
+
+#margenAltaEscuelas{
+    border: 1px solid #c5dbec;
+    
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#contenidoCCT label{
+    margin-top: 1%;
+}
+
+#listaCCT{
+    background:#FFF;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 13%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#cancelarCCT{
+    background: #fff none repeat scroll 0 0;
+    color: #ff9900;
+    /*font-size: 65%;*/
+    margin-left: 40%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    width: 99px;
+}
+#tablaCCT{
+    border: 1px;
+    width: 100%;
+    /*font-size: 67%;*/
+    margin-bottom: 2%;
+    text-align: left;
+}
+
+
+
+#tablaCCT_wrapper{
+    margin-top: 10%;
+}
