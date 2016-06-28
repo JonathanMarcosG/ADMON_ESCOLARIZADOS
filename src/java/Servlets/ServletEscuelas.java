@@ -6,14 +6,13 @@
 package Servlets;
 
 import Beans.Escuelas;
-import ConexionBD.IngresoAbd;
+import DAO.InsercionesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -63,9 +62,12 @@ public class ServletEscuelas extends HttpServlet {
         esc.setNombre(nombre);
         esc.setDomicilio(domicilio);
         
-        IngresoAbd bd = new IngresoAbd(usuario,contra);
-        bd.altaEscuela(esc);
-        out.print(bd.getErrorInsert());
+        String msjError=InsercionesDAO.altaEscuela(esc, usuario, contra);
+        out.print(msjError);
+        
+//        IngresoAbd bd = new IngresoAbd(usuario,contra);
+//        bd.altaEscuela(esc);
+//        out.print(bd.getErrorInsert());
         
     }
 

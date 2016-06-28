@@ -6,9 +6,9 @@
 package Servlets;
 
 import ConexionBD.IngresoAbd;
+import DAO.InsercionesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -51,15 +51,15 @@ public class servletMailsMasivos extends HttpServlet {
          PrintWriter out = response.getWriter();
           String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
-        String mensaje="incorrecto";
+        String mensaje=InsercionesDAO.insertRenovacioPref(usuario, contra);
         
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        bd.insertRenovacioPref();
-        if(bd.getError()==0){
-            mensaje="correcto";
-        }else{
-            mensaje=bd.getErrorInsert();
-        }
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        bd.insertRenovacioPref();
+//        if(bd.getError()==0){
+//            mensaje="correcto";
+//        }else{
+//            mensaje=bd.getErrorInsert();
+//        }
         
     out.print(mensaje);
         

@@ -975,7 +975,8 @@ $(document).ready(function() {
                 $("#resultadoNvaEscuela").append("Se guardaron correctamente los datos.".fontsize(1).fontcolor("green"));
                 $("#resultadoNvaEscuela").show();
             } else {
-                $("#resultadoNvaEscuela").append("Ha ocurrido un error al guardar".fontsize(1).fontcolor("red"));
+//                $("#resultadoNvaEscuela").append("Ha ocurrido un error al guardar".fontsize(1).fontcolor("red"));
+                $("#resultadoNvaEscuela").append(("Ha ocurrido el siguiente error al intentar guardar los datos: "+data).fontsize(1).fontcolor("red"));
                 $("#resultadoNvaEscuela").show();
             }
         });

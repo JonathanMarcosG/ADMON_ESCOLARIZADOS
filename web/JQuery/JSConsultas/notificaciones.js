@@ -31,7 +31,8 @@ function notifRenovacion(){
             }, 3000);
        }else{
         $("#ref").text(""); 
-        $("#ref").append("Ha ocurrido un error al intentar notificar a los aspirantes, por favor intentelo de nuevo.".fontsize(3).fontcolor("red"));
+        $("#ref").append(data+" Se produjo el error al intentar notificar a los aspirantes, por favor intentelo de nuevo.".fontsize(3).fontcolor("red"));
+//        $("#ref").append("Ha ocurrido un error al intentar notificar a los aspirantes, por favor intentelo de nuevo.".fontsize(3).fontcolor("red"));
         $("#referencia1").text("");
         $("#aspiante").text("");
         $("#referencia2").text("");

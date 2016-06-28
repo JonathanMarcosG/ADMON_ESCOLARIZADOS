@@ -5,11 +5,11 @@
  */
 package PDF;
 
-import Beans.reportes;
 import ConexionBD.IngresoAbd;
+import DAO.ReportesDAO;
+import Utils.Constants;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -25,25 +25,16 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Color;
-
-import java.awt.Font;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -113,10 +104,10 @@ public class Reportes {
                 table.setTotalWidth(100);
                 table.setLockedWidth(true);
                 table.getDefaultCell().setFixedHeight(30);
-               
+
                 table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
                 table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-                
+
                 table.addCell(String.format("Página %d de", writer.getPageNumber()));
                 Image totalP = Image.getInstance(total);
                 totalP.scaleAbsoluteHeight(30);
@@ -138,6 +129,7 @@ public class Reportes {
                     2, 2, 0);
         }
     }
+
     public class HeaderFooterPageEvent2 extends PdfPageEventHelper {
 
         String header;
@@ -169,7 +161,6 @@ public class Reportes {
                 document.add(vacio);
                 document.add(vacio);
 
-                
             } catch (BadElementException ex) {
                 Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -192,11 +183,11 @@ public class Reportes {
                 leftText.setLockedWidth(true);
                 table.getDefaultCell().setFixedHeight(30);
                 leftText.getDefaultCell().setFixedHeight(30);
-               
+
                 table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
                 table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                 leftText.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-                
+
                 table.addCell(String.format("Página %d de", writer.getPageNumber()));
                 leftText.addCell("ITTOL-ED-PO-001-01");
                 Image totalP = Image.getInstance(total);
@@ -205,11 +196,9 @@ public class Reportes {
                 PdfPCell cell = new PdfPCell(totalP);
                 cell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 cell.setBorder(Rectangle.NO_BORDER);
-                
-                    table.addCell(cell);
-                
-                
-            
+
+                table.addCell(cell);
+
                 leftText.writeSelectedRows(0, -1, 14, 30, writer.getDirectContent());
                 table.writeSelectedRows(0, -1, 485, 30, writer.getDirectContent());
             } catch (DocumentException de) {
@@ -338,7 +327,7 @@ public class Reportes {
                 reporteT = "Pre proceso concluido";
             }
             if (tr == 4) {
-                
+
                 PdfWriter writer = PdfWriter.getInstance(reporte, response.getOutputStream());
                 ArrayList<PdfPTable> tables = firmasAspAula(usuario, contra, horario, opc);
                 Rectangle rect = new Rectangle(30, 30, 550, 800);
@@ -346,36 +335,34 @@ public class Reportes {
                 HeaderFooterPageEvent2 event = new HeaderFooterPageEvent2("ficha-pdf.png");
                 writer.setPageEvent(event);
                 reporte.open();
-                PdfPTable tableH = tables.get(tables.size()-1);
-                tableH.writeSelectedRows(0, -1, 10, 720, writer.getDirectContent());
-
+                
+                if (tables.size() != 1) {
+                    PdfPTable tableH = tables.get(tables.size() - 1);
+                    tableH.writeSelectedRows(0, -1, 10, 720, writer.getDirectContent());
+                } else {
+                    reporte.add(tables.get(0));
+                }
                 reporte.add(vacio);
 
                 reporte.add(vacio);
                 reporte.add(vacio);
-                for(int i=0;i<tables.size();i++){
-                   
-                    if(i+1!=tables.size()){
-                       
+                for (int i = 0; i < tables.size(); i++) {
+
+                    if (i + 1 != tables.size()) {
+
                         reporte.add(tables.get(i));
-                        if(i+2!=tables.size()){
-                        reporte.newPage();
+                        if (i + 2 != tables.size()) {
+                            reporte.newPage();
                         }
                     }
-                   
+
                 }
-               
-                
-               
-                
-                
+
                 reporteT = "Firmas Aspirantes_" + horario;
 
             }
             if (tr == 5) {
 
-                
-                
                 PdfWriter writer = PdfWriter.getInstance(reporte, response.getOutputStream());
                 ArrayList<PdfPTable> tables = tablaAspAula(usuario, contra, horario, opc);
                 Rectangle rect = new Rectangle(30, 30, 550, 800);
@@ -383,27 +370,29 @@ public class Reportes {
                 HeaderFooterPageEvent2 event = new HeaderFooterPageEvent2("ficha-pdf.png");
                 writer.setPageEvent(event);
                 reporte.open();
-                PdfPTable tableH = tables.get(tables.size()-1);
-                tableH.writeSelectedRows(0, -1, 10, 720, writer.getDirectContent());
+                if (tables.size() != 1) {
+                    PdfPTable tableH = tables.get(tables.size() - 1);
+                    tableH.writeSelectedRows(0, -1, 10, 720, writer.getDirectContent());
+                } else {
+                    reporte.add(tables.get(0));
+                }
 
                 reporte.add(vacio);
 
                 reporte.add(vacio);
                 reporte.add(vacio);
-                for(int i=0;i<tables.size();i++){
-                   
-                    if(i+1!=tables.size()){
-                       
+                for (int i = 0; i < tables.size(); i++) {
+
+                    if (i + 1 != tables.size()) {
+
                         reporte.add(tables.get(i));
-                        if(i+2!=tables.size()){
-                        reporte.newPage();
+                        if (i + 2 != tables.size()) {
+                            reporte.newPage();
                         }
                     }
-                   
-                }
-                
 
-                
+                }
+
                 reporteT = "Aspirantes por aula horario_" + horario;
 
             }
@@ -413,7 +402,6 @@ public class Reportes {
             reporte.addKeywords("Instituto Tecnológico de Toluca");
             reporte.addAuthor("Coordinacion de desarrollo de sistemas");
             reporte.addCreator("Centro de Cómputo ITT");
-            
 
             //Asignamos el manejador de eventos al escritor.
             reporte.close();
@@ -425,10 +413,10 @@ public class Reportes {
 
     public static ArrayList<PdfPTable> tablaAspAula(String usuario, String contra, String horario, int opc) throws DocumentException {
         ArrayList<PdfPTable> tablas = new ArrayList();
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        List<reportes> reportes;
-        PdfPTable table = new PdfPTable(5);
-        reportes = bd.AspPAula(horario, opc);
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+        List<Beans.Reportes> reportes = ReportesDAO.AspPAula(usuario, contra, horario, opc);
+        PdfPTable table = new PdfPTable(2);
+//        reportes = bd.AspPAula(horario, opc);
         PdfPCell cell;
         String carrera = "", fecha = "";
         if (reportes.isEmpty()) {
@@ -436,7 +424,26 @@ public class Reportes {
             cell = new PdfPCell(new Phrase("Lo sentimos, por el momento aún no existe información para este reporte."));
             cell.setColspan(5);
             table.addCell(cell);
+            tablas.add(table);
 
+        } else if (reportes.get(0).getCodError() != 0) {
+
+            if (reportes.get(0).getCodError() == -1) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR1));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -2) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR3));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -3) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR2));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            tablas.add(table);
         } else {
             table = new PdfPTable(5);
             BaseColor color = new BaseColor(217, 217, 217);
@@ -477,9 +484,9 @@ public class Reportes {
 //             cell.setBackgroundColor(color);
 //             cell.setBorderColor(colorB);
 //            table.addCell(cell);
-          
-            for(int i=0;i<reportes.size();i++) {
-               
+
+            for (int i = 0; i < reportes.size(); i++) {
+
                 cell = new PdfPCell(new Phrase(reportes.get(i).getFicha()));
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(cell);
@@ -497,84 +504,102 @@ public class Reportes {
                 cell = new PdfPCell(new Phrase(reportes.get(i).getFirma()));
                 table.addCell(cell);
                 fecha = reportes.get(i).getFecha();
-                 if((i%34==0 || (i+1)==reportes.size()) && i!=0 ){
-                     
+                if ((i % 34 == 0 || (i + 1) == reportes.size()) && i != 0) {
+
                     table.setWidthPercentage(110);
                     table.setWidths(new int[]{25, 30, 120, 15, 15});
                     tablas.add(table);
-                     table = new PdfPTable(5);
+                    table = new PdfPTable(5);
                 }
             }
+            String datos[] = horario.split(" ");
+            String edificio = datos[0];
+            String aula = "";
+            if (edificio.length() == 2) {
+                edificio = datos[0].charAt(0) + "";
+                aula = datos[0].charAt(1) + "";
+            }
+            if (edificio.length() == 4) {
 
-            
-        }
-        String datos[] = horario.split(" ");
-        String edificio = datos[0];
-        String aula = "";
-        if (edificio.length() == 2) {
-            edificio = datos[0].charAt(0) + "";
-            aula = datos[0].charAt(1) + "";
-        }
-        if (edificio.length() == 4) {
+                edificio = datos[0].charAt(0) + "" + datos[0].charAt(1);
+                aula = "" + datos[0].charAt(3);
+            }
+            if (edificio.length() == 5) {
 
-            edificio = datos[0].charAt(0) + "" + datos[0].charAt(1);
-            aula = "" + datos[0].charAt(3);
-        }
-        if (edificio.length() == 5) {
+                edificio = datos[0].charAt(0) + "" + datos[0].charAt(1);
+                aula = "" + datos[0].charAt(3) + datos[0].charAt(4);
+            }
+            PdfPTable tableH = new PdfPTable(7);
+            tableH.setTotalWidth(500);
+            cell.setMinimumHeight(20);
+            cell = new PdfPCell(new Phrase("CARRERA:(1)", FontFactory.getFont("arial", 11)));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setColspan(2);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase(carrera));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setColspan(5);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase("FECHA DE EXAMEN:(2)", FontFactory.getFont("arial", 11)));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setColspan(2);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase(fecha));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase("EDIFICIO:(3)", FontFactory.getFont("arial", 11)));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase(edificio));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase("AULA:(4)", FontFactory.getFont("arial", 11)));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase(aula));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
 
-            edificio = datos[0].charAt(0) + "" + datos[0].charAt(1);
-            aula = "" + datos[0].charAt(3) + datos[0].charAt(4);
+            tablas.add(tableH);
         }
-        PdfPTable tableH = new PdfPTable(7);
-        tableH.setTotalWidth(500);
-        cell.setMinimumHeight(20);
-        cell = new PdfPCell(new Phrase("CARRERA:(1)", FontFactory.getFont("arial", 11)));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setColspan(2);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase(carrera));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setColspan(5);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase("FECHA DE EXAMEN:(2)", FontFactory.getFont("arial", 11)));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setColspan(2);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase(fecha));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase("EDIFICIO:(3)", FontFactory.getFont("arial", 11)));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase(edificio));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase("AULA:(4)", FontFactory.getFont("arial", 11)));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase(aula));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
 
-        tablas.add(tableH);
-        
         return tablas;
     }
+
     public static ArrayList<PdfPTable> firmasAspAula(String usuario, String contra, String horario, int opc) throws DocumentException {
         ArrayList<PdfPTable> tablas = new ArrayList();
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        List<reportes> reportes;
-        PdfPTable table = new PdfPTable(6);
-        reportes = bd.AspPAula(horario, opc);
-        PdfPCell cell;
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+        List<Beans.Reportes> reportes;
+        PdfPTable table = new PdfPTable(2);
+        reportes = ReportesDAO.AspPAula(usuario, contra, horario, opc);
+//        reportes = bd.AspPAula(horario, opc);
         String carrera = "", fecha = "";
         if (reportes.isEmpty()) {
-
+            PdfPCell cell;
             cell = new PdfPCell(new Phrase("Lo sentimos, por el momento aún no existe información para este reporte."));
-            cell.setColspan(6);
+            cell.setColspan(5);
             table.addCell(cell);
-
+            tablas.add(table);
+        } else if (reportes.get(0).getCodError() != 0) {
+            PdfPCell cell;
+            if (reportes.get(0).getCodError() == -1) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR1));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -2) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR3));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -3) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR2));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            tablas.add(table);
         } else {
+            PdfPCell cell;
             table = new PdfPTable(6);
             BaseColor color = new BaseColor(217, 217, 217);
             BaseColor colorB = new BaseColor(0, 0, 0);
@@ -615,7 +640,7 @@ public class Reportes {
             cell.setBorderColor(colorB);
             table.addCell(cell);
 
-            for(int i=0;i<reportes.size();i++){
+            for (int i = 0; i < reportes.size(); i++) {
                 cell = new PdfPCell(new Phrase(reportes.get(i).getFicha()));
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(cell);
@@ -632,85 +657,102 @@ public class Reportes {
                 table.addCell(cell);
                 cell = new PdfPCell(new Phrase(reportes.get(i).getFirma()));
                 table.addCell(cell);
-                
+
                 table.addCell(cell);
                 fecha = reportes.get(i).getFecha();
-                
-                 if((i%34==0 || (i+1)==reportes.size()) && i!=0 ){
-                     
+
+                if ((i % 34 == 0 || (i + 1) == reportes.size()) && i != 0) {
+
                     table.setWidthPercentage(110);
-            table.setWidths(new int[]{25, 30, 90, 15, 15, 30});
+                    table.setWidths(new int[]{25, 30, 90, 15, 15, 30});
                     tablas.add(table);
-                     table = new PdfPTable(6);
+                    table = new PdfPTable(6);
                 }
             }
+            String datos[] = horario.split(" ");
+            String edificio = datos[0];
+            String aula = "";
+            if (edificio.length() == 2) {
+                edificio = datos[0].charAt(0) + "";
+                aula = datos[0].charAt(1) + "";
+            }
+            if (edificio.length() == 4) {
 
-           
-        }
-        String datos[] = horario.split(" ");
-        String edificio = datos[0];
-        String aula = "";
-        if (edificio.length() == 2) {
-            edificio = datos[0].charAt(0) + "";
-            aula = datos[0].charAt(1) + "";
-        }
-        if (edificio.length() == 4) {
+                edificio = datos[0].charAt(0) + "" + datos[0].charAt(1);
+                aula = "" + datos[0].charAt(3);
+            }
+            if (edificio.length() == 5) {
 
-            edificio = datos[0].charAt(0) + "" + datos[0].charAt(1);
-            aula = "" + datos[0].charAt(3);
-        }
-        if (edificio.length() == 5) {
+                edificio = datos[0].charAt(0) + "" + datos[0].charAt(1);
+                aula = "" + datos[0].charAt(3) + datos[0].charAt(4);
+            }
+            PdfPTable tableH = new PdfPTable(7);
+            tableH.setTotalWidth(500);
+            cell.setMinimumHeight(20);
+            cell = new PdfPCell(new Phrase("CARRERA:(1)", FontFactory.getFont("arial", 11)));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setColspan(2);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase(carrera));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setColspan(5);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase("FECHA DE EXAMEN:(2)", FontFactory.getFont("arial", 11)));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setColspan(2);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase(fecha));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase("EDIFICIO:(3)", FontFactory.getFont("arial", 11)));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase(edificio));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase("AULA:(4)", FontFactory.getFont("arial", 11)));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
+            cell = new PdfPCell(new Phrase(aula));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tableH.addCell(cell);
 
-            edificio = datos[0].charAt(0) + "" + datos[0].charAt(1);
-            aula = "" + datos[0].charAt(3) + datos[0].charAt(4);
-        }
-        PdfPTable tableH = new PdfPTable(7);
-        tableH.setTotalWidth(500);
-        cell.setMinimumHeight(20);
-        cell = new PdfPCell(new Phrase("CARRERA:(1)", FontFactory.getFont("arial", 11)));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setColspan(2);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase(carrera));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setColspan(5);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase("FECHA DE EXAMEN:(2)", FontFactory.getFont("arial", 11)));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setColspan(2);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase(fecha));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase("EDIFICIO:(3)", FontFactory.getFont("arial", 11)));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase(edificio));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase("AULA:(4)", FontFactory.getFont("arial", 11)));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
-        cell = new PdfPCell(new Phrase(aula));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableH.addCell(cell);
+            tablas.add(tableH);
 
-        tablas.add(tableH);
-        
+        }
+
         return tablas;
     }
 
     public static PdfPTable noaltaCen(String usuario, String contra) throws DocumentException {
         PdfPTable table = new PdfPTable(5);
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        List<reportes> reportes;
-        reportes = bd.noAltaCen();
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+        List<Beans.Reportes> reportes;
+        reportes = ReportesDAO.noAltaCen(usuario, contra);
+//        reportes = bd.noAltaCen();
         if (reportes.isEmpty()) {
-
             PdfPCell cell;
             cell = new PdfPCell(new Phrase("Lo sentimos, por el momento aún no existe información para este reporte."));
             cell.setColspan(5);
             table.addCell(cell);
+        } else if (reportes.get(0).getCodError() != 0) {
+            PdfPCell cell;
+            if (reportes.get(0).getCodError() == -1) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR1));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -2) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR3));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -3) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR2));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+//            cell = new PdfPCell(new Phrase(reportes.get(0).getMsjError()));
         } else {
             BaseColor color = new BaseColor(69, 161, 240);
             BaseColor colorB = new BaseColor(255, 255, 255);
@@ -741,7 +783,7 @@ public class Reportes {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
 
-            for (reportes reporte : reportes) {
+            for (Beans.Reportes reporte : reportes) {
                 cell = new PdfPCell(new Phrase(reporte.getPreficha()));
                 cell.setBorderColor(color);
                 table.addCell(cell);
@@ -769,17 +811,35 @@ public class Reportes {
 
     public static PdfPTable procesoCon(String usuario, String contra) throws DocumentException {
 
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        List<reportes> reportes;
-        reportes = bd.procesoCon();
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+        List<Beans.Reportes> reportes;
+        reportes = ReportesDAO.procesoCon(usuario, contra);
+//        reportes = bd.procesoCon();
         PdfPTable table = new PdfPTable(2);
 
         if (reportes.isEmpty()) {
-
             PdfPCell cell;
             cell = new PdfPCell(new Phrase("Lo sentimos, por el momento aún no existe información para este reporte."));
             cell.setColspan(5);
             table.addCell(cell);
+        } else if (reportes.get(0).getCodError() != 0) {
+            PdfPCell cell;
+            if (reportes.get(0).getCodError() == -1) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR1));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -2) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR3));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -3) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR2));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+//            cell = new PdfPCell(new Phrase(reportes.get(0).getMsjError()));
         } else {
             BaseColor color = new BaseColor(69, 161, 240);
             BaseColor colorB = new BaseColor(255, 255, 255);
@@ -797,7 +857,7 @@ public class Reportes {
             cell.setBackgroundColor(color);
             table.addCell(cell);
             int total = 0;
-            for (reportes reporte : reportes) {
+            for (Beans.Reportes reporte : reportes) {
 
                 cell = new PdfPCell(new Phrase(reporte.getNombre(), FontFactory.getFont("arial", 8)));
 
@@ -830,8 +890,9 @@ public class Reportes {
     public static PdfPTable statusfichas(String usuario, String contra) throws DocumentException {
 
         IngresoAbd bd = new IngresoAbd(usuario, contra);
-        List<reportes> reportes;
-        reportes = bd.statusFichas();
+        List<Beans.Reportes> reportes;
+        reportes = ReportesDAO.statusFichas(usuario, contra);
+//        reportes = bd.statusFichas();
 
         PdfPTable table = new PdfPTable(4);
         if (reportes.isEmpty()) {
@@ -840,6 +901,24 @@ public class Reportes {
             cell = new PdfPCell(new Phrase("Lo sentimos, por el momento aún no existe información para este reporte."));
             cell.setColspan(5);
             table.addCell(cell);
+        } else if (reportes.get(0).getCodError() != 0) {
+            PdfPCell cell;
+            if (reportes.get(0).getCodError() == -1) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR1));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -2) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR3));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+            if (reportes.get(0).getCodError() == -3) {
+                cell = new PdfPCell(new Phrase(Constants.ERROR2));
+                cell.setColspan(5);
+                table.addCell(cell);
+            }
+//            cell = new PdfPCell(new Phrase(reportes.get(0).getMsjError()));
         } else {
             BaseColor color = new BaseColor(69, 161, 240);
             BaseColor colorB = new BaseColor(255, 255, 255);
@@ -868,7 +947,7 @@ public class Reportes {
             int totalP = 0;
             int totalPp = 0;
             int totalPr = 0;
-            for (reportes reporte : reportes) {
+            for (Beans.Reportes reporte : reportes) {
                 cell = new PdfPCell(new Phrase(reporte.getNombre(), FontFactory.getFont("arial", 8)));
                 cell.setBorderColor(color);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -915,19 +994,19 @@ public class Reportes {
     }
 
     public ArrayList<JFreeChart> grafica(String usuario, String contra) {
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
         ArrayList<JFreeChart> graficas = new ArrayList();
-        List<reportes> reportes;
-        reportes = bd.statusFichas();
-        reportes report = new reportes();
-        report = bd.preFichas();
+        List<Beans.Reportes> reportes = ReportesDAO.statusFichas(usuario, contra);
+//        reportes = bd.statusFichas();
+        Beans.Reportes report = ReportesDAO.preFichas(usuario, contra);
+//        report = bd.preFichas();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
         DefaultPieDataset dataset3 = new DefaultPieDataset();
         if (reportes == null || report == null) {
             return graficas;
         } else {
-            for (reportes reporte : reportes) {
+            for (Beans.Reportes reporte : reportes) {
                 String carrera = "";
 
                 if (reporte.getNombre().contentEquals("INGENIERÍA MECATRÓNICA")) {
@@ -966,7 +1045,7 @@ public class Reportes {
                     "Número de prefichas", dataset, PlotOrientation.HORIZONTAL, true,
                     true, false);
 
-            for (reportes reporte : reportes) {
+            for (Beans.Reportes reporte : reportes) {
                 String carrera = "";
 
                 if (reporte.getNombre().contentEquals("INGENIERÍA MECATRÓNICA")) {
@@ -996,7 +1075,7 @@ public class Reportes {
                 if (reporte.getNombre().contentEquals("INGENIERÍA QUIMICA")) {
                     carrera = "IQUI";
                 }
-               
+
                 dataset2.setValue(Integer.parseInt(reporte.getPrefpagadas()), reporte.getPrefpagadas(), carrera);
             }
 

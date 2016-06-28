@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ConexionBD.CreaPrefichaPDF;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 //Recupera  la  preficha  desde el apartado de Recuperar  preficha en el inicio
 public class PrefichaPDF extends HttpServlet {
     @Override
@@ -29,9 +31,21 @@ public class PrefichaPDF extends HttpServlet {
         response.setContentType("application/pdf");
         String curp = request.getParameter("curp");
         CreaPrefichaPDF preficha = new CreaPrefichaPDF();
-//        System.out.println("curp"+curp);
-        preficha.ElaboraPreficha(curp, response, d);
-       
+        ByteArrayOutputStream baos=preficha.ElaboraPreficha(curp, d);
+        sendDocument(response, baos);
+    }
+      public void sendDocument(HttpServletResponse response, ByteArrayOutputStream obj) throws IOException{
+         
+        response.setHeader("Expires", "0");
+            response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+            response.setHeader("Pragma", "public");
+            response.setContentType("application/pdf");
+            response.setContentLength(obj.size());
+        try (OutputStream os = response.getOutputStream()) {
+            obj.writeTo(os);
+            os.flush();
+            os.close();
+        }
     }
       
 }

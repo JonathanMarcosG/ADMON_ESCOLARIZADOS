@@ -17,25 +17,18 @@ import Beans.Escuelas;
 import Beans.LiberacionPago;
 import Beans.SeguimientoDelAlumno;
 import Beans.SelectCarreras;
-import Beans.VerificarCambio;
 import Beans.confConv;
-import Beans.reportes;
+import Beans.Reportes;
 import itt.web.conexion.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -65,130 +58,6 @@ public class IngresoAbd {
 
     }
 
-    
-
-    public String altaEscuela(Escuelas esc) {
-        String errorInterno = "correcto";
-        Connection laConexion = null;
-        try {
-            cs = null;
-          laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
-            cs =  laConexion.prepareCall("{call FICHAS.PQ_INSERT_ADMIN_1.INSERT_ESCUELA_BACH_SP(?,?,?,?,?,?,?,?,?,?,?,?)}");
-
-            cs.setString("paClaveCCT", esc.getClaveCCT());
-            cs.setString("paControl", esc.getControl());
-            cs.setString("paServicio", esc.getServicio());
-            cs.setString("paAmbito", esc.getAmbito());
-            cs.setString("paTurno", esc.getTurno());
-            cs.setInt("paEstadoId", Integer.parseInt(esc.getEdoId()));
-
-            cs.setString("paMunicipio", esc.getMunicipio());
-            cs.setString("paLocalidad", esc.getLocalidad());
-            cs.setString("paNombreEscuela", esc.getNombre());
-            cs.setString("paDomicilio", esc.getDomicilio());
-
-            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
-            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
-            cs.execute();
-
-            error = cs.getInt("paCodigoError");
-
-            if (error == 0) {
-                errorInsert = "ninguno";
-            } else {
-                errorInsert = cs.getString(12);
-
-            }
-            cs.close();
-        }  catch (SQLException ex) {
-            errorInsert = ex.getMessage();
-
-            Logger.getLogger(IngresoAbd.class.getName()).log(Level.SEVERE, null, ex);
-
-        } finally {
-            if (laConexion != null) {
-                
-                    Conexion.cerrarConexion(laConexion);
-                
-            }
-        }
-
-        return errorInterno;
-    }
-
-    public List<ClaveCCT> getClaveCCT(int pk) throws SQLException, ClassNotFoundException {
-        ClaveCCT cla;
-        List<ClaveCCT> Clave;
-        Clave = new ArrayList<>();
-        Connection laConexion = null;
-        try {
-          laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
-            cs = laConexion.prepareCall("{call FICHAS.CATALOGOS_ASPIRANTES_PQ.GET_CATALOGO_SP(?,?,?,?,?)}");
-            cs.setInt("paOpcionCatalogo", 7);//pasar  atributos  para  where o insertar 
-            cs.setInt("paFiltroFk", pk);
-            cs.registerOutParameter("paCurRetorno", oracle.jdbc.driver.OracleTypes.CURSOR);//tomas  parametro de salida de  la  base de datos           
-            cs.registerOutParameter("paCodError", oracle.jdbc.driver.OracleTypes.NUMBER);
-            cs.registerOutParameter("paDescError", oracle.jdbc.driver.OracleTypes.VARCHAR);
-            cs.execute();
-            error = cs.getInt("paCodError");//#error
-
-            if (error == 0) {
-                errorInsert = "ninguno";
-                ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
-                //CONVERTIR EL  CURSOR  A  UN ARRAY LIST
-                while (rs.next()) {
-                    cla = new ClaveCCT();
-                    cla.setClave(rs.getObject(1).toString());
-                    cla.setCentroEducativo(rs.getObject(2).toString());
-                    cla.setTurno(rs.getObject(3).toString());
-                    cla.setDomicilio(rs.getObject(4).toString());
-                    Clave.add(cla);
-                }
-            }
-            cs.close();
-
-        } catch (SQLException ex) {
-            errorInsert = ex.getMessage();
-
-        } finally {
-            if (laConexion != null) {
-              
-                    Conexion.cerrarConexion(laConexion);
-                
-            }
-        }
-        return Clave;
-    }
-public void insertRenovacioPref() {
-
-        Connection laConexion = null;
-        CallableStatement Cs;
-        try {
-           
-            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
-          
-            Cs = laConexion.prepareCall("{call FICHAS.PQ_CHECK_ADMIN_1.GENERA_PETICION_CORREO_REN_SP(?,?)}");
-            Cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
-            Cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
-            
-            Cs.execute();
-            
-            setError(Cs.getInt("paCodigoError"));
-            setErrorInsert(Cs.getString("paMjeDescError"));
-            Cs.close();
-        } catch ( SQLException ex) {
-            errorInsert = ex.getMessage();
-
-        } finally {
-            if (laConexion != null) {
-               
-                
-                    Conexion.cerrarConexion(laConexion);
-                
-            }
-        }
-        
-    }
     public SeguimientoDelAlumno Notificaciones(String parametroInicial, int bandera) {
         SeguimientoDelAlumno sda = new SeguimientoDelAlumno();
         Connection laConexion = null;
@@ -1707,230 +1576,230 @@ public void insertRenovacioPref() {
 
     }
 
-    public List<reportes> AspPAula(String horario, int opc) {
-        Connection laConexion = null;
-        CallableStatement cs;
-        List<reportes> reportes = new ArrayList<>();
-        reportes report;
+//    public List<reportes> AspPAula(String horario, int opc) {
+//        Connection laConexion = null;
+//        CallableStatement cs;
+//        List<reportes> reportes = new ArrayList<>();
+//        reportes report;
+//
+//        try {
+//            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
+//
+//            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP_2.GET_LISTA_ASPIRANTES_AULA_SP(?,?,?,?,?,?)}");
+//
+//            cs.setString("paAulaHorario", horario);
+//
+//            cs.setInt("paOpcion", opc);
+//            cs.registerOutParameter("paFechaExamen",OracleTypes.VARCHAR);
+//            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
+//            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
+//            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
+////            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
+//            cs.execute();
+//            String fecha=cs.getString("paFechaExamen");
+//            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
+//
+//            while (rs.next()) {
+//                report = new reportes();
+//                report.setNombre(rs.getString("NOMBRE"));
+//                report.setCarrera(rs.getInt("CARRERA"));
+//                report.setFecha(fecha);
+//                report.setNom_carrera(rs.getString("NOMBRE_CARR"));
+//                report.setFicha(rs.getString("FICHA"));
+//                report.setFolio(rs.getString("FOLIO_CENEVAL"));
+//                report.setFirma(rs.getString("FIRMA"));
+//                report.setAsist(rs.getString("ASIST"));
+//                report.setLugar(rs.getString("LUGAR"));
+//                reportes.add(report);
+//            }
+//
+//            cs.close();
+//      
+//        } catch (SQLException ex) {
+//            errorInsert2 = ex.getMessage();
+//            error2 = ex.getErrorCode();
+//
+//        } finally {
+//            if (laConexion != null) {
+//               Conexion.cerrarConexion(laConexion);
+//            }
+//        }
+//        System.out.println(errorInsert2);
+//        return reportes;
+//    }
 
-        try {
-            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
-
-            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP_2.GET_LISTA_ASPIRANTES_AULA_SP(?,?,?,?,?,?)}");
-
-            cs.setString("paAulaHorario", horario);
-
-            cs.setInt("paOpcion", opc);
-            cs.registerOutParameter("paFechaExamen",OracleTypes.VARCHAR);
-            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
-            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
-            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
-//            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
-            cs.execute();
-            String fecha=cs.getString("paFechaExamen");
-            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
-
-            while (rs.next()) {
-                report = new reportes();
-                report.setNombre(rs.getString("NOMBRE"));
-                report.setCarrera(rs.getInt("CARRERA"));
-                report.setFecha(fecha);
-                report.setNom_carrera(rs.getString("NOMBRE_CARR"));
-                report.setFicha(rs.getString("FICHA"));
-                report.setFolio(rs.getString("FOLIO_CENEVAL"));
-                report.setFirma(rs.getString("FIRMA"));
-                report.setAsist(rs.getString("ASIST"));
-                report.setLugar(rs.getString("LUGAR"));
-                reportes.add(report);
-            }
-
-            cs.close();
-      
-        } catch (SQLException ex) {
-            errorInsert2 = ex.getMessage();
-            error2 = ex.getErrorCode();
-
-        } finally {
-            if (laConexion != null) {
-               Conexion.cerrarConexion(laConexion);
-            }
-        }
-        System.out.println(errorInsert2);
-        return reportes;
-    }
-
-    public List<reportes> noAltaCen() {
-        Connection laConexion = null;
-
-        List<reportes> reportes = new ArrayList<>();
-        reportes report;
-        try {
-            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
-
-            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP.GET_CENEVAL_NO_ALTA_SP(?,?,?)}");
-
-            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
-            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
-            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
-//            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
-            cs.execute();
-
-            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
-
-            while (rs.next()) {
-                report = new reportes();
-                report.setPreficha(Integer.toString(rs.getInt("PREFICHA")));
-
-                report.setReferencia(rs.getString("REFERENCIA_BANCARIA"));
-                report.setCorreo(rs.getString("CORREO"));
-                report.setUsuario(rs.getString("USUARIO"));
-                report.setUl_act(rs.getString("ULTIMA_ACTUALIZACION"));
-
-                reportes.add(report);
-            }
-
-            cs.close();
-       
-        } catch (SQLException ex) {
-            errorInsert2 = ex.getMessage();
-            error2 = ex.getErrorCode();
-
-        } finally {
-            if (laConexion != null) {
-                Conexion.cerrarConexion(laConexion);
-            }
-        }
-
-        return reportes;
-    }
+//    public List<reportes> noAltaCen() {
+//        Connection laConexion = null;
+//
+//        List<reportes> reportes = new ArrayList<>();
+//        reportes report;
+//        try {
+//            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
+//
+//            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP.GET_CENEVAL_NO_ALTA_SP(?,?,?)}");
+//
+//            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
+//            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
+//            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
+////            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
+//            cs.execute();
+//
+//            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
+//
+//            while (rs.next()) {
+//                report = new reportes();
+//                report.setPreficha(Integer.toString(rs.getInt("PREFICHA")));
+//
+//                report.setReferencia(rs.getString("REFERENCIA_BANCARIA"));
+//                report.setCorreo(rs.getString("CORREO"));
+//                report.setUsuario(rs.getString("USUARIO"));
+//                report.setUl_act(rs.getString("ULTIMA_ACTUALIZACION"));
+//
+//                reportes.add(report);
+//            }
+//
+//            cs.close();
+//       
+//        } catch (SQLException ex) {
+//            errorInsert2 = ex.getMessage();
+//            error2 = ex.getErrorCode();
+//
+//        } finally {
+//            if (laConexion != null) {
+//                Conexion.cerrarConexion(laConexion);
+//            }
+//        }
+//
+//        return reportes;
+//    }
 
           
 
 
-    public List<reportes> procesoCon() {
-        Connection laConexion = null;
-        CallableStatement cs;
-        List<reportes> reportes = new ArrayList<>();
-        reportes report;
-        try {
-            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
+//    public List<reportes> procesoCon() {
+//        Connection laConexion = null;
+//        CallableStatement cs;
+//        List<reportes> reportes = new ArrayList<>();
+//        reportes report;
+//        try {
+//            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
+//
+//            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP.GET_PROCESO_CONCL_FICHAS_SP(?,?,?)}");
+//
+//            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
+//            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
+//            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
+////            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
+//            cs.execute();
+//
+//            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
+//
+//            while (rs.next()) {
+//                report = new reportes();
+//                report.setNombre(rs.getString("NOMBRE"));
+//                report.setPreproc(Integer.toString(rs.getInt("PRE_PROCESO_CONCLUIDO")));
+//
+//                reportes.add(report);
+//            }
+//
+//            cs.close();
+//       
+//
+//        } catch (SQLException ex) {
+//            errorInsert2 = ex.getMessage();
+//            error2 = ex.getErrorCode();
+//
+//        } finally {
+//            if (laConexion != null) {
+//                Conexion.cerrarConexion(laConexion);
+//            }
+//        }
+//
+//        return reportes;
+//    }
 
-            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP.GET_PROCESO_CONCL_FICHAS_SP(?,?,?)}");
+//    public List<reportes> statusFichas() {
+//        Connection laConexion = null;
+//        CallableStatement cs;
+//        List<reportes> reportes = new ArrayList<>();
+//        reportes report;
+//        try {
+//            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
+//
+//            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP.GET_REP_STATUS_FICHAS_SP(?,?,?)}");
+//
+//            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
+//            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
+//            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
+////            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
+//            cs.execute();
+//
+//            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
+//            
+//            while (rs.next()) {
+//                report = new reportes();
+//                                            
+//                report.setNombre(rs.getString("NOMBRE"));
+//                report.setPreficha(rs.getString("PREFICHAS"));
+//                report.setPreproc(rs.getString("PRE_PROCESO_CONCLUIDO"));
+//                report.setPrefpagadas(rs.getString("PREFICHAS_PAGADAS"));
+//
+//                reportes.add(report);
+//            }
+//            
+//            cs.close();
+//        
+//        } catch (SQLException ex) {
+//            errorInsert2 = ex.getMessage();
+//            error2 = ex.getErrorCode();
+//
+//        } finally {
+//            if (laConexion != null) {
+//                Conexion.cerrarConexion(laConexion);
+//            }
+//        }
+//
+//        return reportes;
+//    }
 
-            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
-            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
-            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
-//            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
-            cs.execute();
-
-            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
-
-            while (rs.next()) {
-                report = new reportes();
-                report.setNombre(rs.getString("NOMBRE"));
-                report.setPreproc(Integer.toString(rs.getInt("PRE_PROCESO_CONCLUIDO")));
-
-                reportes.add(report);
-            }
-
-            cs.close();
-       
-
-        } catch (SQLException ex) {
-            errorInsert2 = ex.getMessage();
-            error2 = ex.getErrorCode();
-
-        } finally {
-            if (laConexion != null) {
-                Conexion.cerrarConexion(laConexion);
-            }
-        }
-
-        return reportes;
-    }
-
-    public List<reportes> statusFichas() {
-        Connection laConexion = null;
-        CallableStatement cs;
-        List<reportes> reportes = new ArrayList<>();
-        reportes report;
-        try {
-            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
-
-            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP.GET_REP_STATUS_FICHAS_SP(?,?,?)}");
-
-            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
-            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
-            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
-//            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
-            cs.execute();
-
-            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
-            
-            while (rs.next()) {
-                report = new reportes();
-                                            
-                report.setNombre(rs.getString("NOMBRE"));
-                report.setPreficha(rs.getString("PREFICHAS"));
-                report.setPreproc(rs.getString("PRE_PROCESO_CONCLUIDO"));
-                report.setPrefpagadas(rs.getString("PREFICHAS_PAGADAS"));
-
-                reportes.add(report);
-            }
-            
-            cs.close();
-        
-        } catch (SQLException ex) {
-            errorInsert2 = ex.getMessage();
-            error2 = ex.getErrorCode();
-
-        } finally {
-            if (laConexion != null) {
-                Conexion.cerrarConexion(laConexion);
-            }
-        }
-
-        return reportes;
-    }
-
-    public reportes preFichas() {
-        Connection laConexion = null;
-        CallableStatement cs;
-
-        reportes report = new reportes();
-        try {
-            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
-
-            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP.GET_TOTAL_PREFICHAS_ASP_SP(?,?,?)}");
-
-            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
-            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
-            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
-//            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
-            cs.execute();
-
-            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
-            rs.next();
-            report.setNombre(rs.getString("FICHAS_TEC"));
-
-            report.setPrefpagadas(rs.getString("FICHAS_PAGADAS"));
-            report.setPreproc(rs.getString("FICHAS_PEND_X_PAGAR"));
-            report.setPreficha(rs.getString("FICHAS_DISPONIBLES"));
-
-            cs.close();
-      
-        } catch (SQLException ex) {
-            errorInsert2 = ex.getMessage();
-            error2 = ex.getErrorCode();
-
-        } finally {
-            if (laConexion != null) {
-               Conexion.cerrarConexion(laConexion);
-            }
-        }
-
-        return report;
-    }
+//    public reportes preFichas() {
+//        Connection laConexion = null;
+//        CallableStatement cs;
+//
+//        reportes report = new reportes();
+//        try {
+//            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
+//
+//            cs = laConexion.prepareCall("{call FICHAS.GET_REPORTES_ASP.GET_TOTAL_PREFICHAS_ASP_SP(?,?,?)}");
+//
+//            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
+//            cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER);
+//            cs.registerOutParameter("paMjeDescError", OracleTypes.VARCHAR);
+////            System.out.println( cs.registerOutParameter("paCodigoError", OracleTypes.NUMBER));
+//            cs.execute();
+//
+//            ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
+//            rs.next();
+//            report.setNombre(rs.getString("FICHAS_TEC"));
+//
+//            report.setPrefpagadas(rs.getString("FICHAS_PAGADAS"));
+//            report.setPreproc(rs.getString("FICHAS_PEND_X_PAGAR"));
+//            report.setPreficha(rs.getString("FICHAS_DISPONIBLES"));
+//
+//            cs.close();
+//      
+//        } catch (SQLException ex) {
+//            errorInsert2 = ex.getMessage();
+//            error2 = ex.getErrorCode();
+//
+//        } finally {
+//            if (laConexion != null) {
+//               Conexion.cerrarConexion(laConexion);
+//            }
+//        }
+//
+//        return report;
+//    }
 
     public List<String> HorariosCen() {
         Connection laConexion = null;

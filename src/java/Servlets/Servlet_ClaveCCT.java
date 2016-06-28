@@ -8,10 +8,9 @@ package Servlets;
 
 import Beans.ClaveCCT;
 import ConexionBD.IngresoAbd;
+import DAO.CatalogosDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,21 +32,29 @@ public class Servlet_ClaveCCT extends HttpServlet {
 
     List<ClaveCCT> ClaveCCT;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
        
       
         String opc = request.getParameter("estado");
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
         int pk = Integer.parseInt(opc);
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
+        
         try {
-            ClaveCCT = bd.getClaveCCT(pk);
+            ClaveCCT=CatalogosDAO.getClaveCCT(usuario, contra, 7, pk);
         } catch (SQLException ex) {
             Logger.getLogger(Servlet_ClaveCCT.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Servlet_ClaveCCT.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        try {
+//            ClaveCCT = bd.getClaveCCT(pk);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Servlet_ClaveCCT.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Servlet_ClaveCCT.class.getName()).log(Level.SEVERE, null, ex);
+//        } 
         String json = null;
         json = new Gson().toJson(ClaveCCT);
         response.setContentType("application/json");

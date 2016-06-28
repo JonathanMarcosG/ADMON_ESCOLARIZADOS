@@ -6,20 +6,9 @@
 package quart;
 
 import Beans.AvisoCorreos;
-import Beans.Fechas;
 import ConexionBD.IngresoAbd;
 import Utils.Constants;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServlet;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
