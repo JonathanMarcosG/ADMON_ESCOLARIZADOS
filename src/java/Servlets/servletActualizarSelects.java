@@ -9,7 +9,6 @@ import Beans.ListaCarreras;
 import Beans.SelectCarreras;
 import Beans.UnirListas;
 import ConexionBD.IngresoAbd;
-import DAO.CatalogosDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,12 +40,11 @@ public class servletActualizarSelects extends HttpServlet {
         IngresoAbd bd = new IngresoAbd(usuario, contra);
 
         ListaCarreras opcns = new ListaCarreras();
-        List<SelectCarreras> opcio = CatalogosDAO.llenarListas(usuario, contra, 10, 0);
-//        List<SelectCarreras> opcio = bd.llenarListas(10, 0);
+        List<SelectCarreras> opcio = bd.llenarListas(10, 0);
 
-        List<SelectCarreras> op1 = new ArrayList();
-        List<SelectCarreras> op2 = new ArrayList();
-        List<SelectCarreras> op3 = new ArrayList();
+        List<SelectCarreras> op1 = new ArrayList<SelectCarreras>();
+        List<SelectCarreras> op2 = new ArrayList<SelectCarreras>();
+        List<SelectCarreras> op3 = new ArrayList<SelectCarreras>();
 
         int opcion1 = Integer.parseInt(o1);
         int opcion2 = Integer.parseInt(o2);

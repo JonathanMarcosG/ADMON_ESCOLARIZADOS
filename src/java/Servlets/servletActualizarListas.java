@@ -8,7 +8,6 @@ package Servlets;
 import Beans.ListaCarreras;
 import Beans.SelectCarreras;
 import ConexionBD.IngresoAbd;
-import DAO.CatalogosDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,10 +42,9 @@ public class servletActualizarListas extends HttpServlet {
        
         IngresoAbd bd = new IngresoAbd(usuario, contra);
         ListaCarreras opcns = new ListaCarreras();
-        List<SelectCarreras> opcio = CatalogosDAO.llenarListas(usuario, contra, opcion, filtro);        
-//        List<SelectCarreras> opcio = bd.llenarListas(opcion, filtro);
+        List<SelectCarreras> opcio = bd.llenarListas(opcion, filtro);
 
-        List<SelectCarreras> actualizar = new ArrayList();
+        List<SelectCarreras> actualizar = new ArrayList<SelectCarreras>();
 
         if (filtro2 == 0) {
             SelectCarreras b = new SelectCarreras();

@@ -832,56 +832,56 @@ public class IngresoAbd {
         return opciones;
     }
 
-//    public List<SelectCarreras> llenarListas(int idCatalogo, int filtro) {
-//        List<SelectCarreras> opciones = new ArrayList<SelectCarreras>();
-//        Connection laConexion = null;
-//        try {
-//            cs = null;
-//            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
-//            cs = laConexion.prepareCall("{call FICHAS.CATALOGOS_ASPIRANTES_PQ.GET_CATALOGO_SP(?,?,?,?,?)}");
-//            cs.setInt("paOpcionCatalogo", idCatalogo);
-//            cs.setInt("paFiltroFk", filtro);
-//            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
-//            cs.registerOutParameter("paCodError", OracleTypes.NUMBER);
-//            cs.registerOutParameter("paDescError", OracleTypes.VARCHAR);
-//            cs.execute();
-//
-//            setError(cs.getInt("paCodError"));
-//
-//            if (getError() == 0) {
-//                errorInsert = "ninguno";
-//
-//                ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
-//                if (rs != null) {
-//                    while (rs.next()) {
-//
-//                        SelectCarreras sc = new SelectCarreras();
-//                        sc.setClaveCarrera(rs.getInt(1));
-//                        sc.setNombre(rs.getString(2));
-//                        sc.setIdPais(rs.getString(1));
-//                        opciones.add(sc);
-//
-//                    }
-//                } else {
-//                    errorInsert = "No se encontraron coincidencias";
-//                }
-//            } else if (getError() == -1) {
-//                errorInsert = "Error antes de hacer la consulta";
-//            } else {
-//                errorInsert = cs.getString("paDescError");
-//
-//            }
-//            cs.close();
-//       
-//        } catch (SQLException ex) {
-//            errorInsert = ex.getMessage();
-//        } finally {
-//            if (laConexion != null) {
-//                Conexion.cerrarConexion(laConexion);
-//            }
-//        }
-//        return opciones;
-//    }
+    public List<SelectCarreras> llenarListas(int idCatalogo, int filtro) {
+        List<SelectCarreras> opciones = new ArrayList<SelectCarreras>();
+        Connection laConexion = null;
+        try {
+            cs = null;
+            laConexion = Conexion.getConnection(user,pass,"PAES","Modulo_Administrador");
+            cs = laConexion.prepareCall("{call FICHAS.CATALOGOS_ASPIRANTES_PQ.GET_CATALOGO_SP(?,?,?,?,?)}");
+            cs.setInt("paOpcionCatalogo", idCatalogo);
+            cs.setInt("paFiltroFk", filtro);
+            cs.registerOutParameter("paCurRetorno", OracleTypes.CURSOR);
+            cs.registerOutParameter("paCodError", OracleTypes.NUMBER);
+            cs.registerOutParameter("paDescError", OracleTypes.VARCHAR);
+            cs.execute();
+
+            setError(cs.getInt("paCodError"));
+
+            if (getError() == 0) {
+                errorInsert = "ninguno";
+
+                ResultSet rs = (ResultSet) cs.getObject("paCurRetorno");
+                if (rs != null) {
+                    while (rs.next()) {
+
+                        SelectCarreras sc = new SelectCarreras();
+                        sc.setClaveCarrera(rs.getInt(1));
+                        sc.setNombre(rs.getString(2));
+                        sc.setIdPais(rs.getString(1));
+                        opciones.add(sc);
+
+                    }
+                } else {
+                    errorInsert = "No se encontraron coincidencias";
+                }
+            } else if (getError() == -1) {
+                errorInsert = "Error antes de hacer la consulta";
+            } else {
+                errorInsert = cs.getString("paDescError");
+
+            }
+            cs.close();
+       
+        } catch (SQLException ex) {
+            errorInsert = ex.getMessage();
+        } finally {
+            if (laConexion != null) {
+                Conexion.cerrarConexion(laConexion);
+            }
+        }
+        return opciones;
+    }
 
     public List<SelectCarreras> llenarListaPais(int idCatalogo, int filtro) {
         List<SelectCarreras> opciones = new ArrayList<SelectCarreras>();

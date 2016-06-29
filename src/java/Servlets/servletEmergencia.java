@@ -9,7 +9,6 @@ import Beans.EnEmergencia;
 import Beans.ListaCarreras;
 import Beans.SelectCarreras;
 import ConexionBD.IngresoAbd;
-import DAO.CatalogosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -51,8 +50,8 @@ public class servletEmergencia extends HttpServlet {
                 ListaCarreras opcns = new ListaCarreras();
                 List<SelectCarreras> opcio = bd.llenaOpcionesCarreras(aspirante);
 
-                opcio=CatalogosDAO.llenarListas(usuario, contra, 2, 0);
-//                opcio = bd.llenarListas(2, 0);
+                
+                opcio = bd.llenarListas(2, 0);
                 if(ee.getEstado() == null){
                     ee.setEstado("0");
                 }
@@ -60,8 +59,7 @@ public class servletEmergencia extends HttpServlet {
                 opcns.comparar(opcio, estado, idEstado);
                 opcns.AgregarOpciones(opcio, estado, idEstado);
 
-                opcio=CatalogosDAO.llenarListas(usuario, contra, 3, idEstado);
-//                opcio = bd.llenarListas(3, idEstado);
+                opcio = bd.llenarListas(3, idEstado);
                 int mun = Integer.parseInt(ee.getCiudad());
                 opcns.comparar(opcio, municipio, mun);
                 opcns.AgregarOpciones(opcio, municipio, mun);

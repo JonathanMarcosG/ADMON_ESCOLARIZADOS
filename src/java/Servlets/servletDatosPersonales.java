@@ -11,7 +11,6 @@ import Beans.FolioCENEVAL;
 import Beans.ListaCarreras;
 import Beans.SelectCarreras;
 import ConexionBD.IngresoAbd;
-import DAO.CatalogosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -100,8 +99,7 @@ public class servletDatosPersonales extends HttpServlet implements Serializable 
                                 }
                             }
 
-                            opcio = CatalogosDAO.llenarListas(usuario, contra, 10, 0);
-//                            opcio = bd.llenarListas(10, 0);
+                            opcio = bd.llenarListas(10, 0);
 
                             opcns.comparar(opcio, op1, opcion1);
                             opcns.comparar(opcio, op2, opcion2);
@@ -120,21 +118,18 @@ public class servletDatosPersonales extends HttpServlet implements Serializable 
 
                             } else {
 
-                                opcio = CatalogosDAO.llenarListas(usuario, contra, 2, 0);
-//                                opcio = bd.llenarListas(2, 0);
+                                opcio = bd.llenarListas(2, 0);
                                 int idEstado = Integer.parseInt(dp.getIdEdoNac());
 
                                 opcns.comparar(opcio, estado, idEstado);
                                 opcns.AgregarOpciones(opcio, estado, idEstado);
 
-                                opcio = CatalogosDAO.llenarListas(usuario, contra, 3, idEstado);
-//                                opcio = bd.llenarListas(3, idEstado);
+                                opcio = bd.llenarListas(3, idEstado);
                                 int mun = Integer.parseInt(dp.getMunNac());
                                 opcns.comparar(opcio, municipio, mun);
                                 opcns.AgregarOpciones(opcio, municipio, mun);
 
-                                opcio = CatalogosDAO.llenarListas(usuario, contra, 9, mun);
-//                                opcio = bd.llenarListas(9, mun);
+                                opcio = bd.llenarListas(9, mun);
                                 int local = Integer.parseInt(dp.getLocalidad());
                                 opcns.comparar(opcio, localidad, local);
                                 opcns.AgregarOpciones(opcio, localidad, local);
@@ -174,8 +169,7 @@ public class servletDatosPersonales extends HttpServlet implements Serializable 
 //                
 //                opcns.comparar(opcio, mpioEP, idMpioEsculaProd);
 //                ep.setNomMpio(mpioEP.get(0).getNombre());
-                    opcio = CatalogosDAO.llenarListas(usuario, contra, 8, 0);
-//                    opcio = bd.llenarListas(8, 0);
+                    opcio = bd.llenarListas(8, 0);
                     int idEscuela = Integer.parseInt(ep.getClasificacion());
                     opcns.comparar(opcio, escuelaEP, idEscuela);
                     opcns.AgregarOpciones(opcio, escuelaEP, idEscuela);
