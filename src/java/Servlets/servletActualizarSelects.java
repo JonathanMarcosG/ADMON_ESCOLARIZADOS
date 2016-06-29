@@ -9,6 +9,7 @@ import Beans.ListaCarreras;
 import Beans.SelectCarreras;
 import Beans.UnirListas;
 import ConexionBD.IngresoAbd;
+import DAO.CatalogosDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,11 +41,12 @@ public class servletActualizarSelects extends HttpServlet {
         IngresoAbd bd = new IngresoAbd(usuario, contra);
 
         ListaCarreras opcns = new ListaCarreras();
-        List<SelectCarreras> opcio = bd.llenarListas(10, 0);
+        List<SelectCarreras> opcio = CatalogosDAO.llenarListas(usuario,contra,10, 0);
+//        List<SelectCarreras> opcio = bd.llenarListas(10, 0);
 
-        List<SelectCarreras> op1 = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> op2 = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> op3 = new ArrayList<SelectCarreras>();
+        List<SelectCarreras> op1 = new ArrayList();
+        List<SelectCarreras> op2 = new ArrayList();
+        List<SelectCarreras> op3 = new ArrayList();
 
         int opcion1 = Integer.parseInt(o1);
         int opcion2 = Integer.parseInt(o2);
@@ -58,7 +60,7 @@ public class servletActualizarSelects extends HttpServlet {
         opcns.SinRepetir(opcio, op2, opcion1, opcion3);
         opcns.SinRepetir(opcio, op3, opcion2, opcion1);
         UnirListas ul = new UnirListas(op1, op2, op3);
-        String json = null;
+        String json;
         json = new Gson().toJson(ul);
   
         response.setContentType("application/json");

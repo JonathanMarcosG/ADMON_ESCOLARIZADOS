@@ -11,6 +11,7 @@ import Beans.ListaCarreras;
 import Beans.SelectCarreras;
 import ConexionBD.IngresoAbd;
 import ConexionBD.conexion;
+import DAO.CatalogosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -42,26 +43,26 @@ public class servletDomicilioSocioeconomicos extends HttpServlet {
         DatosDelDomicilio ddd = null;
         DatosSocioeconomicos ds = null;
 
-        List<SelectCarreras> estado = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> municipio = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> localidad = new ArrayList<SelectCarreras>();
+        List<SelectCarreras> estado = new ArrayList();
+        List<SelectCarreras> municipio = new ArrayList();
+        List<SelectCarreras> localidad = new ArrayList();
 
-        List<SelectCarreras> vivePadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> viveMadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> becaDS = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> Zona = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> estudiosPadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> estudiosMadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> ingresosTotales = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> dependeDe = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> ocupacionPadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> ocupacionMadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> tipoCasa = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> noPersonasCasa = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> cuartosCasa = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> progOportunidades = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> viveCon = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> dependeEconomicamente = new ArrayList<SelectCarreras>();
+        List<SelectCarreras> vivePadre = new ArrayList();
+        List<SelectCarreras> viveMadre = new ArrayList();
+        List<SelectCarreras> becaDS = new ArrayList();
+        List<SelectCarreras> Zona = new ArrayList();
+        List<SelectCarreras> estudiosPadre = new ArrayList();
+        List<SelectCarreras> estudiosMadre = new ArrayList();
+        List<SelectCarreras> ingresosTotales = new ArrayList();
+        List<SelectCarreras> dependeDe = new ArrayList();
+        List<SelectCarreras> ocupacionPadre = new ArrayList();
+        List<SelectCarreras> ocupacionMadre = new ArrayList();
+        List<SelectCarreras> tipoCasa = new ArrayList();
+        List<SelectCarreras> noPersonasCasa = new ArrayList();
+        List<SelectCarreras> cuartosCasa = new ArrayList();
+        List<SelectCarreras> progOportunidades = new ArrayList();
+        List<SelectCarreras> viveCon = new ArrayList();
+        List<SelectCarreras> dependeEconomicamente = new ArrayList();
 
         IngresoAbd bd = new IngresoAbd(usuario, contra);
         try {
@@ -72,18 +73,21 @@ public class servletDomicilioSocioeconomicos extends HttpServlet {
                 ListaCarreras opcns = new ListaCarreras();
                 List<SelectCarreras> opcio = bd.llenaOpcionesCarreras(aspirante);
 
-                opcio = bd.llenarListas(2, 0);
+                opcio = CatalogosDAO.llenarListas(usuario,contra,2, 0);
+//                opcio = bd.llenarListas(2, 0);
                 int idEstado = ddd.getEstadoFK();
               
                 opcns.comparar(opcio, estado, idEstado);
                 opcns.AgregarOpciones(opcio, estado, idEstado);
                 if (idEstado != 0) {
-                    opcio = bd.llenarListas(3, idEstado);
+                    opcio = CatalogosDAO.llenarListas(usuario,contra,3, idEstado);
+//                    opcio = bd.llenarListas(3, idEstado);
                     int mun = Integer.parseInt(ddd.getMunicipio());
                     opcns.comparar(opcio, municipio, mun);
                     opcns.AgregarOpciones(opcio, municipio, mun);
 
-                    opcio = bd.llenarListas(9, mun);
+                    opcio = CatalogosDAO.llenarListas(usuario,contra,9,mun);
+//                    opcio = bd.llenarListas(9, mun);
                     int local = Integer.parseInt(ddd.getLocalidad());
                     opcns.comparar(opcio, localidad, local);
                     opcns.AgregarOpciones(opcio, localidad, local);
@@ -115,7 +119,8 @@ public class servletDomicilioSocioeconomicos extends HttpServlet {
                 opcns.compararPais(opcio, Zona, zonaDS);
                 opcns.AgregarOpcionesPais(opcio, Zona, zonaDS);
 
-                opcio = bd.llenarListas(4, 0);
+                opcio = CatalogosDAO.llenarListas(usuario,contra,4, 0);
+//                opcio = bd.llenarListas(4, 0);
                 int estudiosPa = ds.getMaxEstudiosPadre();
 
                 opcns.comparar(opcio, estudiosPadre, estudiosPa);
@@ -141,12 +146,14 @@ public class servletDomicilioSocioeconomicos extends HttpServlet {
                 opcns.comparar(opcio, dependeEconomicamente, dependencia);
                 opcns.AgregarOpciones(opcio, dependeEconomicamente, dependencia);
 
-                opcio = bd.llenarListas(6, 0);
+                opcio = CatalogosDAO.llenarListas(usuario,contra,6, 0);
+//                opcio = bd.llenarListas(6, 0);
                 int ocupacionPa = ds.getOcupacionPadre();
                 opcns.comparar(opcio, ocupacionPadre, ocupacionPa);
                 opcns.AgregarOpciones(opcio, ocupacionPadre, ocupacionPa);
 
-                opcio = bd.llenarListas(6, 0);
+                opcio = CatalogosDAO.llenarListas(usuario,contra,6, 0);
+//                opcio = bd.llenarListas(6, 0);
                 int ocupacionMa = ds.getOcupacionMadre();
                 opcns.comparar(opcio, ocupacionMadre, ocupacionMa);
                 opcns.AgregarOpciones(opcio, ocupacionMadre, ocupacionMa);
@@ -183,7 +190,8 @@ public class servletDomicilioSocioeconomicos extends HttpServlet {
                 opcns.compararPais(opcio, progOportunidades, oportunidades);
                 opcns.AgregarOpcionesPais(opcio, progOportunidades, oportunidades);
 
-                opcio = bd.llenarListas(5, 0);
+                opcio = CatalogosDAO.llenarListas(usuario,contra,5, 0);
+//                opcio = bd.llenarListas(5, 0);
 
                 String vive = ds.getViveCon();
                 if (vive == null) {
