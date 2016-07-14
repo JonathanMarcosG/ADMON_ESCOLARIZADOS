@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlets;
 
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.InsercionesDAO;
+import Utils.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Rocio
  */
 //@WebServlet(name = "servletRegistrarAltaCENEVAL", urlPatterns = {"/servletRegistrarAltaCENEVAL"})
-
 public class servletRegistrarAltaCENEVAL extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -31,18 +31,37 @@ public class servletRegistrarAltaCENEVAL extends HttpServlet {
         String idAspirante = request.getParameter("idAspirante");
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
-        
-        IngresoAbd bd = new IngresoAbd(usuario,contra);
-        bd.altaCENEVAL(idAspirante);
-        
-        if(bd.getErrorInsert().contentEquals("ninguno")){
-            out.print("ninguno");
-            
-        }else{
-            out.print("Se ha producido un error: "+bd.getErrorInsert());
-        }
-        }
 
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        bd.altaCENEVAL(idAspirante);
+        int existeCeneval=InsercionesDAO.altaCENEVAL(usuario, contra, idAspirante);
+
+        if (existeCeneval==0) {
+            out.print(0);
+
+        } else {
+            out.print(error(existeCeneval));
+        }
+    }
+
+    public String error(int error) {
+        String mensaje = "";
+        switch (error) {
+            case -1:
+                mensaje = Constants.ERROR5;
+                break;
+            case -2:
+                mensaje = Constants.ERROR3;
+                break;
+            case -3:
+                mensaje = Constants.ERROR2;
+                break;
+            default:
+                mensaje = "Se produjo un error al generar la ficha.";
+                break;
+        }
+        return mensaje;
+    }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -11,6 +11,8 @@ package Beans;
  */
 public class LiberacionPago implements java.io.Serializable {
 
+    private int codError;
+    private String msjError;
     private String preficha;
     private String nombre;
     private String apellidoPat;
@@ -133,5 +135,33 @@ public class LiberacionPago implements java.io.Serializable {
      */
     public void setPreficha(String preficha) {
         this.preficha = preficha;
+    }
+
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
     }
 }

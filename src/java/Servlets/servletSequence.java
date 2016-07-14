@@ -6,7 +6,8 @@
 package Servlets;
 
 import Beans.confConv;
-import ConexionBD.IngresoAbd;
+import DAO.ConvocatoriaDAO;
+import Utils.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -34,43 +35,55 @@ public class servletSequence extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-            String mensaje;
+        String mensaje;
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
-        confConv cv=new confConv();
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        bd.CheckSec();
-         cv=bd.ParametrosConv();
-        
-        if(bd.getError()==0){
-            
-            mensaje="true";
-        }else{
-            
-            if(bd.getError()==1){
-                mensaje="false";  
-               if(cv.getMetaEstablecida()==null || cv.getMetaEstablecida().contentEquals("")||cv.getMetaReal()==null || cv.getMetaReal().contentEquals("")||cv.getFechaEntrega()==null || cv.getFechaEntrega().contentEquals("")||cv.getFechaFpre()==null || cv.getFechaFpre().contentEquals("")||cv.getFechaIpre()==null || cv.getFechaIpre().contentEquals("")||cv.getFechaPago()==null || cv.getFechaPago().contentEquals("")){
-            cv.setMensaje("none");
-                
-            }
-                if (!bd.getErrorInsert2().contentEquals("ninguno")) {
-                  
-             if(cv.getMetaEstablecida()==null || cv.getMetaEstablecida().contentEquals("")||cv.getMetaReal()==null || cv.getMetaReal().contentEquals("")||cv.getFechaEntrega()==null || cv.getFechaEntrega().contentEquals("")||cv.getFechaFpre()==null || cv.getFechaFpre().contentEquals("")||cv.getFechaIpre()==null || cv.getFechaIpre().contentEquals("")||cv.getFechaPago()==null || cv.getFechaPago().contentEquals("")){
-            cv.setMensaje("none");
-                
-            }
-        
+
+        confConv cv;
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+
+//        bd.CheckSec();
+        String[] resultado1 = ConvocatoriaDAO.CheckSec(usuario, contra).split("&");
+        switch (Integer.parseInt(resultado1[1])) {
+            case 0:
+                mensaje = "true";
+                break;
+            case 1:
+                cv = ConvocatoriaDAO.ParametrosConv(usuario, contra);
+                mensaje = "false";
+                if (cv.getCodError() == 0) {
+                    if (cv.getMetaEstablecida() == null || cv.getMetaEstablecida().contentEquals("") || cv.getMetaReal() == null || cv.getMetaReal().contentEquals("") || cv.getFechaEntrega() == null || cv.getFechaEntrega().contentEquals("") || cv.getFechaFpre() == null || cv.getFechaFpre().contentEquals("") || cv.getFechaIpre() == null || cv.getFechaIpre().contentEquals("") || cv.getFechaPago() == null || cv.getFechaPago().contentEquals("")) {
+                        cv.setMensaje("none");
+                    }
+                } else {
+                    mensaje = "Existe un error en la base de datos. Error:" + error(cv.getCodError());
+                }
+                HttpSession session = request.getSession(true);
+                session.setAttribute("convo", cv);
+                break;
+            default:
+                mensaje = "Existe un error en la base de datos. Error:" + error(Integer.parseInt(resultado1[1]));
+                break;
         }
-                
-           HttpSession session = request.getSession(true);
-        session.setAttribute("convo", cv);      
-            }else{
-                mensaje="Existe un error en la base de datos. Error:"+bd.getError();
-            }
-        }
-       
+
         out.print(mensaje);
-        
+
+    }
+
+    public String error(int error) {
+        String mensaje = "";
+        switch (error) {
+            case -1:
+                mensaje = Constants.ERROR6;
+                break;
+            case -2:
+                mensaje = Constants.ERROR3;
+                break;
+            case -3:
+                mensaje = Constants.ERROR2;
+                break;
+        }
+        return mensaje;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

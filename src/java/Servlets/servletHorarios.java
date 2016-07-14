@@ -5,7 +5,8 @@
  */
 package Servlets;
 
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.CierreProcesoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -34,22 +35,26 @@ public class servletHorarios extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String ban="";
+        String ban = "";
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
-        IngresoAbd bd= new IngresoAbd(usuario,contra);
-       List<String> horarioscen= bd.HorariosCen();
-        List<String> horariosmat= bd.HorariosMat();
-        if(horariosmat.size()!=0||horarioscen.size()!=0){
-            ban="correcto";
-        }else{
-            ban="incorrecto";
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+
+//       List<String> horarioscen= bd.HorariosCen();
+        List<String> horarioscen = CierreProcesoDAO.HorariosCen(usuario, contra);
+//        List<String> horariosmat= bd.HorariosMat();
+        List<String> horariosmat = CierreProcesoDAO.HorariosMat(usuario, contra);
+        if (horariosmat.size() != 0 || horarioscen.size() != 0) {
+            ban = "correcto";
+        } else {
+            ban = "incorrecto";
         }
-       HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(true);
         session.setAttribute("horarioscen", horarioscen);
         session.setAttribute("horariosmat", horariosmat);
         out.print(ban);
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -90,4 +95,3 @@ public class servletHorarios extends HttpServlet {
     }// </editor-fold>
 
 }
-

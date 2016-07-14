@@ -77,26 +77,26 @@ public class ClaveCCT {
     public void setDomicilio(String Domicilio) {
         this.Domicilio = Domicilio;
     }
-    public ArrayList  <ClaveCCT>  ConResultSet(ResultSet rs){
-          ArrayList  <ClaveCCT> claves = null;
-        try {
-            ClaveCCT cla= new  ClaveCCT();
-          
-            //CONVERTIR EL  CURSOR  A  UN ARRAY LIST
-            while (rs.next()) {
-             
-                cla.setClave(rs.getObject(1).toString());
-                cla.setCentroEducativo(rs.getObject(2).toString());
-                cla.setTurno(rs.getObject(3).toString());
-                cla.setDomicilio(rs.getObject(4).toString());
-                claves.add(cla);
-            }
-            
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ClaveCCT.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return claves;
-    }
+//    public ArrayList  <ClaveCCT>  ConResultSet(ResultSet rs){
+//          ArrayList  <ClaveCCT> claves = null;
+//        try {
+//            ClaveCCT cla= new  ClaveCCT();
+//          
+//            //CONVERTIR EL  CURSOR  A  UN ARRAY LIST
+//            while (rs.next()) {
+//             
+//                cla.setClave(rs.getObject(1).toString());
+//                cla.setCentroEducativo(rs.getObject(2).toString());
+//                cla.setTurno(rs.getObject(3).toString());
+//                cla.setDomicilio(rs.getObject(4).toString());
+//                claves.add(cla);
+//            }
+//            
+//            
+//            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ClaveCCT.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return claves;
+//    }
 }

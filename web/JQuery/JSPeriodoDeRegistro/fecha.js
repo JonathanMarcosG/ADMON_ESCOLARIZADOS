@@ -215,7 +215,7 @@ $("#btn_confirmar").click(function () {
                 validacionConv(fechain.toString(), fechafin.toString(), pago.toString(), entrega.toString(), inpre.toString(), finpre.toString());
             }
         } else {
-            $("#alert_param").text("Antes de dar de alta el periodo de la convocatoria los parametors de la misma deben estar completos");
+            $("#alert_param").text("Antes de dar de alta el periodo de la convocatoria los parametros de la misma deben estar completos");
             document.getElementById("alert_param").style.display = "block";
 
         }
@@ -311,7 +311,6 @@ var mensaje="";
     function (data) {
 
        mensaje=data.toString();
-      
         if (mensaje === "-1") {
 
             $("#algo").text("");
@@ -693,8 +692,6 @@ function returnCasp() {
     jQuery.get("servletParamSeq",
             {usuario: usuario, contra: contra, opc: opc},
     function (data) {
-
-
         $("#MargenYEncabezado").animate({'opacity': 1}, 0).animate({'opacity': 0}, 0);
         $("#MargenYEncabezado").delay(500).load("Paginas/PeriodoDeRegistro/CantAsp.jsp");
         $("#MargenYEncabezado").animate({'opacity': 1}, 500).animate({'opacity': 1}, 500);

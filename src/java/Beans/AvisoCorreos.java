@@ -35,8 +35,8 @@ import quart.TriggerCorreos;
  */
 public class AvisoCorreos {
   private MimeMultipart multipart = new MimeMultipart("related");
-    private String origen = Constants.userM;
-    private String contrasenia = Constants.passM;
+    private String origen = Constants.MAIL_NOMBRE;
+    private String contrasenia = Constants.MAIL_PASS;
     private String correo;
     private ArrayList<String> correos;
     private String asunto = "Aspirante Tecnológico de Toluca: Periodo de Renovación";

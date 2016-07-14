@@ -8,6 +8,7 @@ package Servlets;
 import Beans.ConfigurarPeriodo;
 import Beans.confConv;
 import ConexionBD.IngresoAbd;
+import DAO.ConvocatoriaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -30,77 +31,82 @@ public class servletParamSeq extends HttpServlet {
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
         String opc = request.getParameter("opc");
-        confConv cv= new confConv();
-         ConfigurarPeriodo cp = new ConfigurarPeriodo();
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        if(opc.contentEquals("1")){
-        cv = bd.ParametrosConv();
-            
-        if (!bd.getErrorInsert2().contentEquals("ninguno")) {
-         if(bd.isConStatus()==false){
-             cv.setMensaje("false");
-           
-         }else{
-              
-        
-            if(cv.getMetaEstablecida()==null || cv.getMetaEstablecida().contentEquals("")){
-            cv.setMensaje("none");
-                
-            }
-         
-        }
-        }else{
-             bd.ReinicioSec();
-             if(cv.getMetaEstablecida()==null || cv.getMetaEstablecida().contentEquals("")){
-            cv.setMensaje("none");
-               
-            }
-         if(bd.getError()!=0){
-             
-             cv.setMensaje(Integer.toString(bd.getError()));
-           
-         }
-        }
-        }else if(opc.contentEquals("2")){
-            
-            cp = bd.verificarPeriodo();
-             if (bd.getErrorInsert().equals("ninguno") || bd.getError()==101) {
-            
-            cp.cambioPeriodo();
-            if(!bd.getErrorInsert2().equals("ninguno")){
-                
-            }else{
-                
-            }
-            
-        } else {
-            
-            if (bd.getError() == -103) {
-                cp.setPeriodo(bd.getErrorInsert());
-                
-            } 
 
-        }
-            cv = bd.ParametrosConv(); 
-           if(cv.getMetaEstablecida()==null || cv.getMetaEstablecida().contentEquals("")){
-            cv.setMensaje("none");
-                
+        confConv cv;
+
+        ConfigurarPeriodo cp = new ConfigurarPeriodo();
+        IngresoAbd bd = new IngresoAbd(usuario, contra);
+
+        if (opc.contentEquals("1")) {
+//            cv = bd.ParametrosConv();
+            cv = ConvocatoriaDAO.ParametrosConv(usuario, contra);
+
+//            if (!bd.getErrorInsert2().contentEquals("ninguno")) {
+            if (cv.getCodError() == 0) {
+                System.out.println("El resultado del booleano es: " + bd.isConStatus());
+                if (bd.isConStatus() == false) {
+                    cv.setMensaje("false");
+
+                } else if (cv.getMetaEstablecida() == null || cv.getMetaEstablecida().contentEquals("")) {
+                    cv.setMensaje("none");
+
+                }
+            } else {
+//                bd.ReinicioSec();
+                int cod = ConvocatoriaDAO.ReinicioSec(usuario, contra);
+                if (cod == 0) {
+                    if (cv.getMetaEstablecida() == null || cv.getMetaEstablecida().contentEquals("")) {
+                        cv.setMensaje("none");
+                    }
+                } else {
+                    cv.setMensaje(Integer.toString(cod));
+                }
+
+//                if (bd.getError() != 0) {
+//
+//                    cv.setMensaje(Integer.toString(bd.getError()));
+//
+//                }
             }
-        
-        }else{
-            
-             cv = bd.ParametrosConv(); 
-           if(cv.getMetaEstablecida()==null || cv.getMetaEstablecida().contentEquals("")||cv.getMetaReal()==null || cv.getMetaReal().contentEquals("")||cv.getFechaEntrega()==null || cv.getFechaEntrega().contentEquals("")||cv.getFechaFpre()==null || cv.getFechaFpre().contentEquals("")||cv.getFechaIpre()==null || cv.getFechaIpre().contentEquals("")||cv.getFechaPago()==null || cv.getFechaPago().contentEquals("")){
-            cv.setMensaje("none");
-                
+        } else if (opc.contentEquals("2")) {
+
+//            cp = bd.verificarPeriodo();
+            cp = ConvocatoriaDAO.verificarPeriodo(usuario, contra);
+//            if (bd.getErrorInsert().equals("ninguno") || bd.getError() == 101) {
+            if (cp.getCodError() == 0) {
+                cp.cambioPeriodo();
+//                if (!bd.getErrorInsert2().equals("ninguno")) {
+//
+//                } else {
+//
+//                }
+            } else if (bd.getError() == -103) {
+//                cp.setPeriodo(bd.getErrorInsert());
+                cp.setPeriodo(cp.getMsjError());
+
+            }
+//            cv = bd.ParametrosConv();
+            cv = ConvocatoriaDAO.ParametrosConv(usuario, contra);
+            if (cv.getCodError() == 0) {
+                if (cv.getMetaEstablecida() == null || cv.getMetaEstablecida().contentEquals("")) {
+                    cv.setMensaje("none");
+                }
+            }
+        } else {
+//            cv = bd.ParametrosConv();
+            cv = ConvocatoriaDAO.ParametrosConv(usuario, contra);
+            if (cv.getCodError() == 0) {
+                if (cv.getMetaEstablecida() == null || cv.getMetaEstablecida().contentEquals("") || cv.getMetaReal() == null || cv.getMetaReal().contentEquals("") || cv.getFechaEntrega() == null || cv.getFechaEntrega().contentEquals("") || cv.getFechaFpre() == null || cv.getFechaFpre().contentEquals("") || cv.getFechaIpre() == null || cv.getFechaIpre().contentEquals("") || cv.getFechaPago() == null || cv.getFechaPago().contentEquals("")) {
+                    cv.setMensaje("none");
+                }
             }
         }
-         
-        mensaje=cv.getMensaje();
-          HttpSession session = request.getSession(true);
+
+        mensaje = cv.getMensaje();
+        HttpSession session = request.getSession(true);
         session.setAttribute("convo", cv);
         session.setAttribute("fechas", cp);
-       
+
         out.print(mensaje);
     }
 

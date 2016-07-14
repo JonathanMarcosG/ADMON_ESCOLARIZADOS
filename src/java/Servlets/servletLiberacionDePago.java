@@ -7,7 +7,10 @@ package Servlets;
 
 import Beans.LiberacionPago;
 import ConexionBD.CompararErrores;
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.CierreProcesoDAO;
+import DAO.VerificaDAO;
+import Utils.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -22,7 +25,7 @@ import javax.servlet.http.HttpSession;
  * @author Rocio
  */
 //@WebServlet(name = "servletLiberacionDePago", urlPatterns = {"/servletLiberacionDePago"})
-public class servletLiberacionDePago extends HttpServlet implements Serializable{
+public class servletLiberacionDePago extends HttpServlet implements Serializable {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,45 +36,69 @@ public class servletLiberacionDePago extends HttpServlet implements Serializable
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
 
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        LiberacionPago lp = bd.liberarPago(referencia);
-        
-        try {
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        LiberacionPago lp = bd.liberarPago(referencia);
+        LiberacionPago lp = VerificaDAO.liberarPago(usuario, contra, referencia);
 
-            if (!lp.getFicha().contains("NOVALID")) {
-                if (bd.getErrorInsert().contentEquals("ninguno")) {
-                    
-                    int ceneval = bd.verificacionEnSeguimiento(lp.getIdAsp(), 5);
+//        try {
+            if (lp.getCodError() == 0) {
+                if (!lp.getFicha().contains("NOVALID")) {
+//                if (bd.getErrorInsert().contentEquals("ninguno")) {
+//                    int ceneval = bd.verificacionEnSeguimiento(lp.getIdAsp(), 5);
+                    String verifica[] = CierreProcesoDAO.verificacionEnSeguimiento(usuario, contra, lp.getIdAsp(), 5).split("&");
+                    String msjError = verifica[0];
+                    int ceneval = Integer.parseInt(verifica[1]);
 
                     if (ceneval == 1 || ceneval == 0) {
-                        out.print("ninguno" + ceneval);
-                      
+//                        out.print("ninguno" + ceneval);
+                        out.print(ceneval);
+
                     } else {
-                        out.print(bd.getErrorCE() + ceneval);
+                        out.print(msjError);
                     }
 
                     HttpSession session = request.getSession(true);
                     session.setAttribute("lp", lp);
                 } else {
-                    out.print("Se ha producido un error, intente nuevamente: " + bd.getErrorInsert());
+//                    out.print("Se ha producido un error, intente nuevamente: " + bd.getErrorInsert());
+                    out.print("Se produjo un error al generar la ficha.");
                 }
             } else {
-                out.print("Se produjo un error al generar la ficha.");
+                out.print(error(lp.getCodError()));
             }
-        } catch (NullPointerException e) {
-            if (!bd.getErrorInsert().contentEquals("ninguno")) {
-                CompararErrores ce = new CompararErrores();
-                if (bd.getError() == 100) {
-                    out.print(bd.getError() + ": "+bd.getErrorInsert());
-                } else {
-                    ce.buscarError(bd.getError());
-                }
-                
-                out.print(ce.getMensajeDeError());
-            } else {
-                out.print("No existe la referencia");
-            }
+//        } catch (NullPointerException e) {
+//            if (!bd.getErrorInsert().contentEquals("ninguno")) {
+//                CompararErrores ce = new CompararErrores();
+//                if (bd.getError() == 100) {
+//                    out.print(bd.getError() + ": " + bd.getErrorInsert());
+//                } else {
+//                    ce.buscarError(bd.getError());
+//                }
+//
+//                out.print(ce.getMensajeDeError());
+//            } else {
+//                out.print("No existe la referencia");
+//            }
+//        }
+    }
+
+    public String error(int error) {
+        String mensaje = "";
+        switch (error) {
+            case -1:
+                mensaje = Constants.ERROR4;
+                break;
+            case -2:
+                mensaje = Constants.ERROR3;
+                break;
+            case -3:
+                mensaje = Constants.ERROR2;
+                break;
+            default:
+                mensaje = "Se produjo un error al generar la ficha.";
+                break;
         }
+        return mensaje;
     }
 
     @Override

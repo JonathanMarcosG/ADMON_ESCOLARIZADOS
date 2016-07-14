@@ -7,8 +7,7 @@ package Servlets;
 
 
 import Beans.ClaveCCT;
-import ConexionBD.IngresoAbd;
-import DAO.CatalogosDAO;
+import DAO.AltaEscuelaDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -41,7 +40,7 @@ public class Servlet_ClaveCCT extends HttpServlet {
         int pk = Integer.parseInt(opc);
         
         try {
-            ClaveCCT=CatalogosDAO.getClaveCCT(usuario, contra, 7, pk);
+            ClaveCCT=AltaEscuelaDAO.getClaveCCT(usuario, contra, 7, pk);
         } catch (SQLException ex) {
             Logger.getLogger(Servlet_ClaveCCT.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

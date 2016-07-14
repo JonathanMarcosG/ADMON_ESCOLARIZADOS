@@ -57,7 +57,7 @@
             <div id="Pestanas_infoEscuelas" class="tabs">
                 <ul class="tab-links">
                     <li><a href="#tabs-1">Búsqueda</a></li>
-                    <li><a href="#tabs-2">Alta</a></li>
+                    <li onclick="oculta();"><a href="#tabs-2" id="btn-tabs-2">Alta</a></li>
                 </ul>                
                 <div class="tab-content" id="contPestanasEscuelas">
                     <div id="tabs-1" class="tab-active">
@@ -112,7 +112,7 @@
                                                 </thead>
                                             </table>
                                         </div>
-                                        <input id="cancelarCCT" type="button" value="Salir">
+                                        <input id="cancelarCCT" type="button" value="Salir" class="btn_style2">
                                         <br>
                                     </div>
                                 </div>
@@ -177,7 +177,7 @@
                         <br><br>
                         <input type="button" value="Guardar" id="btnNvaEscuela" class="btn_style2">
                         <input type="button" value="Cancelar" id="btnCancelEscuela" class="btn_style2">
-                        <label id="resultadoNvaEscuela"></label>
+                        <label id="resultadoNvaEscuela" ></label>
                     </div>
                 </div>
             </div>

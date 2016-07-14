@@ -6,7 +6,8 @@
 package quart;
 
 import Beans.AvisoCorreos;
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.QuartDAO;
 import Utils.Constants;
 import java.util.ArrayList;
 import org.quartz.Job;
@@ -21,22 +22,24 @@ public class TriggerCorreos implements Job {
 
     @Override
     public void execute(JobExecutionContext jec) throws JobExecutionException {
-        IngresoAbd bd = new IngresoAbd(Constants.userT, Constants.passT);
+//        IngresoAbd bd = new IngresoAbd(Constants.userT, Constants.passT);
+        QuartDAO obj=new QuartDAO();
         String error = "incorrecto";
         ArrayList<String> correos = new ArrayList();
         
-        correos = bd.checkRenovacion();
+//        correos = bd.checkRenovacion();
+        correos = obj.checkRenovacion(Constants.BD_NAME,Constants.BD_PASS);
         
        
 
-        if (bd.getError() == 1 ) {
+        if (obj.getError() == 1 ) {
 
             if (correos.size() > 0) {
                 try {
 
                     AvisoCorreos mail = new AvisoCorreos();
-                    mail.setFechaI(bd.getFechaI());
-                    mail.setFechaF(bd.getFechaF());
+                    mail.setFechaI(obj.getFechaI());
+                    mail.setFechaF(obj.getFechaF());
                     mail.setCorreos(correos);
                     mail.sendFromMail();
                     error = mail.getError();
@@ -51,7 +54,8 @@ public class TriggerCorreos implements Job {
 
         if (error.contentEquals("correcto") || error.contentEquals("Invalid Addresses")) {
 
-            bd.checkCorreosEnviados();
+//            bd.checkCorreosEnviados();
+            obj.checkCorreosEnviados(Constants.BD_NAME,Constants.BD_PASS);
         }
     }
 

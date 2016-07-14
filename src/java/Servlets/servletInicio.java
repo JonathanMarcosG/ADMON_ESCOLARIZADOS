@@ -20,8 +20,8 @@ import Beans.SeguimientoDelAlumno;
 import Beans.SelectCarreras;
 import Beans.ValidacionContrasenia;
 import Beans.VerificarCambio;
-import ConexionBD.CompararErrores;
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.ConvocatoriaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -38,71 +38,63 @@ import javax.servlet.http.HttpSession;
 * Se ejecuta cuando se ingresa usuario y contraseña en la pantalla principal del módulo.
 * Valida que el usuario y la contraseña sean válidos y tengan privilegios para ingresar a la aplicación.
 * Inicializa las listas que se ocupan en la aplicación.
-*/
+ */
 public class servletInicio extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        boolean verificar = true;
+//        boolean verificar = true;
         String error = "correcto";
         response.setContentType("text/html;charset=ISO-8859-1");
         request.setCharacterEncoding("UTF8");
         PrintWriter out = response.getWriter();
-        
+
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
         ValidacionContrasenia vc = new ValidacionContrasenia();
-        ConfigurarPeriodo cp = new ConfigurarPeriodo();
-        
         vc.setUsuario(usuario);
         vc.setContransenia(contra);
+        ConfigurarPeriodo cp;
 
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-       
-        try {
-            cp = bd.verificarPeriodo();
-        } catch (NullPointerException e) {
-            CompararErrores errores = new CompararErrores();
-            error = bd.getError() + "";
-            
-            errores.buscarError(Integer.parseInt(error));
-            out.print(errores.getMensajeDeError());
-            if (error.contentEquals("1017")) {
-                
-            }
-        }
-       
-        if (bd.getErrorInsert().equals("ninguno") || bd.getError()==101) {
-            
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+
+//        try {
+//            cp = bd.verificarPeriodo();
+//        } catch (NullPointerException e) {
+//            CompararErrores errores = new CompararErrores();
+//            error = bd.getError() + "";
+//            
+//            errores.buscarError(Integer.parseInt(error));
+//            out.print(errores.getMensajeDeError());
+//            if (error.contentEquals("1017")) {
+//                
+//            }
+//        }
+        cp = ConvocatoriaDAO.verificarPeriodo(usuario, contra);
+
+//        if (bd.getErrorInsert().equals("ninguno") || bd.getError() == 101) {
+        if (cp.getCodError()==0) {
             cp.cambioPeriodo();
-            if(!bd.getErrorInsert2().equals("ninguno")){
-                
-            }else{
-                
-            }
             out.print(error);
         } else {
-            
-            if (bd.getError() == -103) {
-                cp.setPeriodo(bd.getErrorInsert());
-                
-            } else {
-                CompararErrores errores = new CompararErrores();
-                error = bd.getError() + "";
-                
-               
-                errores.buscarError(Integer.parseInt(error));
-                
-                if (!error.contentEquals("1017")) {
-                    out.print(errores.getMensajeDeError());
-
-                
-                }
-                 out.print(bd.getErrorInsert());
-            }
-
+            out.print(cp.getCodError());
         }
+//            if (bd.getError() == -103) {
+//            cp.setPeriodo(bd.getErrorInsert());
+//
+//        } else {
+//            CompararErrores errores = new CompararErrores();
+//            error = bd.getError() + "";
+//
+//            errores.buscarError(Integer.parseInt(error));
+//
+//            if (!error.contentEquals("1017")) {
+//                out.print(errores.getMensajeDeError());
+//
+//            }
+//            out.print(bd.getErrorInsert());
+//        }
         VerificarCambio ver = new VerificarCambio();
         ver.setFichaUtilizada(0);
         DatosPersonales dp = null;
@@ -113,38 +105,38 @@ public class servletInicio extends HttpServlet {
         EnEmergencia ee = new EnEmergencia();
         LiberacionPago lp = new LiberacionPago();
         SeguimientoDelAlumno sda = new SeguimientoDelAlumno();
-        List<SelectCarreras> sexo = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> edoCivil = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> capDif = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> tipoSangre = new ArrayList<SelectCarreras>();
+        List<SelectCarreras> sexo = new ArrayList<>();
+        List<SelectCarreras> edoCivil = new ArrayList<>();
+        List<SelectCarreras> capDif = new ArrayList<>();
+        List<SelectCarreras> tipoSangre = new ArrayList<>();
 
-        List<SelectCarreras> op1 = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> op2 = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> op3 = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> nacionalidad = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> estado = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> municipio = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> localidad = new ArrayList<SelectCarreras>();
+        List<SelectCarreras> op1 = new ArrayList<>();
+        List<SelectCarreras> op2 = new ArrayList<>();
+        List<SelectCarreras> op3 = new ArrayList<>();
+        List<SelectCarreras> nacionalidad = new ArrayList<>();
+        List<SelectCarreras> estado = new ArrayList<>();
+        List<SelectCarreras> municipio = new ArrayList<>();
+        List<SelectCarreras> localidad = new ArrayList<>();
 
-        List<SelectCarreras> vivePadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> viveMadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> becaDS = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> Zona = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> estudiosPadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> estudiosMadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> ingresosTotales = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> dependeDe = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> ocupacionPadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> ocupacionMadre = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> tipoCasa = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> noPersonasCasa = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> cuartosCasa = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> progOportunidades = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> viveCon = new ArrayList<SelectCarreras>();
-        List<SelectCarreras> dependeEconomicamente = new ArrayList<SelectCarreras>();
-        
+        List<SelectCarreras> vivePadre = new ArrayList<>();
+        List<SelectCarreras> viveMadre = new ArrayList<>();
+        List<SelectCarreras> becaDS = new ArrayList<>();
+        List<SelectCarreras> Zona = new ArrayList<>();
+        List<SelectCarreras> estudiosPadre = new ArrayList<>();
+        List<SelectCarreras> estudiosMadre = new ArrayList<>();
+        List<SelectCarreras> ingresosTotales = new ArrayList<>();
+        List<SelectCarreras> dependeDe = new ArrayList<>();
+        List<SelectCarreras> ocupacionPadre = new ArrayList<>();
+        List<SelectCarreras> ocupacionMadre = new ArrayList<>();
+        List<SelectCarreras> tipoCasa = new ArrayList<>();
+        List<SelectCarreras> noPersonasCasa = new ArrayList<>();
+        List<SelectCarreras> cuartosCasa = new ArrayList<>();
+        List<SelectCarreras> progOportunidades = new ArrayList<>();
+        List<SelectCarreras> viveCon = new ArrayList<>();
+        List<SelectCarreras> dependeEconomicamente = new ArrayList<>();
+
         HttpSession session = request.getSession(true);
-        
+
         session.setAttribute("datosPersonales", dp);
         session.setAttribute("datos", vc);
         session.setAttribute("fechas", cp);
@@ -197,7 +189,7 @@ public class servletInicio extends HttpServlet {
 
         session.setAttribute("edoE", estado);
         session.setAttribute("munE", municipio);
-        
+
         session.setAttribute("seguimiento", sda);
         session.setAttribute("preficha", 0);
         session.setAttribute("pago", 0);
@@ -205,7 +197,8 @@ public class servletInicio extends HttpServlet {
         session.setAttribute("folioCeneval", 0);
         session.setAttribute("ficha", 0);
     }
-
+    
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -11,6 +11,8 @@ package Beans;
  */
 public class SeguimientoDelAlumno {
 
+    private int codError;
+    private String msjError;
     private String nombre;
     private String apellidoP;
     private String apellidoM;
@@ -28,7 +30,6 @@ public class SeguimientoDelAlumno {
     private int altaCeneval;
     private String fechaModif;
     private String usuarioModif;
-    
 
     /**
      * @return the nombre
@@ -268,5 +269,32 @@ public class SeguimientoDelAlumno {
         this.apellidoM = apellidoM;
     }
 
-    
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
+    }
+
 }

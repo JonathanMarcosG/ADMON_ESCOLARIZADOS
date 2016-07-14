@@ -28,9 +28,9 @@
 
 
                 <section id="ParaAlinearMatricula" >   
-                   
-                 
-                    
+
+
+
 
                     <fieldset id="folioCaja">
                         <label id="folio" class="etiqueta_foliosNvaEtqCen">Folio CENEVAL:</label>
@@ -46,24 +46,24 @@
                         </button>
 
                     </fieldset>
-                         
+
                     <br>
                 </section>
                 <br>
 
             </div>
             <section id="SectionReferencia">
-                 <fieldset id="solicitud">
-                        <label id="noSolicitud" class="etiqueta_Nsolicitud">N° de Solicitud:</label>
-                        <input type="text" readonly="readonly" id="caja_noSolicitud" class="campo_bloqueado tamano_cajas_textoNSolicitud" value="${datosPersonales.getPreficha()}">
-                    </fieldset>
+                <fieldset id="solicitud">
+                    <label id="noSolicitud" class="etiqueta_Nsolicitud">N° de Solicitud:</label>
+                    <input type="text" readonly="readonly" id="caja_noSolicitud" class="campo_bloqueado tamano_cajas_textoNSolicitud" value="${datosPersonales.getPreficha()}">
+                </fieldset>
 
-                    <fieldset id="cajaFecha">
-                        <label id="ficha" class="etiqueta_FichaConsultar">Ficha:</label>
-                        <input type="text" readonly="readonly" id="caja_ficha" value="${datosPersonales.getMatricula()}" class="tamano_cajas_textoFichaNva campo_bloqueado">
-                        <label id="confirm"></label>
-                    </fieldset>
-                        <br>
+                <fieldset id="cajaFecha">
+                    <label id="ficha" class="etiqueta_FichaConsultar">Ficha:</label>
+                    <input type="text" readonly="readonly" id="caja_ficha" value="${datosPersonales.getMatricula()}" class="tamano_cajas_textoFichaNva campo_bloqueado">
+                    <label id="confirm"></label>
+                </fieldset>
+                <br>
                 <fieldset id="fs_referencia">
                     <label id="etq_referencia">Referencia:</label>
                     <input value="${datosPersonales.getReferencia()}" type="text" class="campo_bloqueado" readonly="readonly" id="caja_referencia">
@@ -107,7 +107,11 @@
 
                                 <label id="etq_municipio" class="etqueta_dp">Municipio de Nacimiento:</label>
                                 <select type="text" name="cajaCURP" value="${datosPersonales.getMunNac()}" id="cajaMunicipio" class="tamano_cajas_texto">  
-
+                                    <c:if test="${municipio.isEmpty()}">
+                                        <option >
+                                            <c:out value="Extranjero"/>
+                                        </option>
+                                    </c:if>
                                     <c:forEach  var="carreras" items="${municipio}" begin="0" end="${municipio.size()}" >
                                         <option id="${carreras.getClaveCarrera()}" value="${carreras.getNombre()}">
                                             <c:out value="${carreras.getNombre()}"/>
@@ -118,6 +122,11 @@
 
                                 <label id="etq_cdNac" class="etqueta_dp">Ciudad de Nacimiento:</label>
                                 <select type="text"  name="cajaCdNac" id="cajaCn" value="${datosPersonales.getLocalidad()}" class="tamano_cajas_texto">
+                                    <c:if test="${localidad.isEmpty()}">
+                                        <option >
+                                            <c:out value="Extranjero"/>
+                                        </option>
+                                    </c:if>
                                     <c:forEach  var="carreras" items="${localidad}" begin="0" end="${localidad.size()}" >
                                         <option id="${carreras.getClaveCarrera()}" value="${carreras.getNombre()}">
                                             <c:out value="${carreras.getNombre()}"/>
@@ -153,6 +162,11 @@
 
                                 <label id="etq_en" class="etqueta_dp">Estado de Nacimiento:</label>
                                 <select type="text" name="cajaCURP" value="${datosPersonales.getEdoNacimiento()}" id="cajaEdo" class="tamano_cajas_texto">
+                                    <c:if test="${estado.isEmpty()}">
+                                        <option >
+                                            <c:out value="Extranjero"/>
+                                        </option>
+                                    </c:if>
                                     <c:forEach  var="carreras" items="${estado}" begin="0" end="${estado.size()}" >
                                         <option id="${carreras.getClaveCarrera()}" value="${carreras.getNombre()}">
                                             <c:out value="${carreras.getNombre()}"/>
@@ -229,11 +243,11 @@
                                     </option>
                                 </c:forEach>
                             </select>
-                          
+
                         </fieldset>
 
                     </section>
-                  
+
                 </div>
                 <br><br>
                 <div id="contenedorEscuelaPro">
@@ -302,19 +316,19 @@
             <input type="button" id="boton_guardarDP"   class="btn_style2" value="GUARDAR">
         </div>
 
-       <!-- <div id="emergenteSobreVerde">
-            <img  height="15%" width="12%" alt="Instituto Tecnológico de Toluca" src="Imagenes/cuidado.png">
-            <label id="titulo" >AVISO IMPORTANTE</label>
-
-            <fieldset id="datos_emergentesSObreVerde">
-                <br>
-                <label id="etqsobreVerde"></label>
-
-
-            </fieldset>
-
-            <input type="button" id="btn_aceptarSobreVerde" name="btn_aceptarSobreVerde" value="Aceptar" class="botonesEmergente">
-        </div>-->
+        <!-- <div id="emergenteSobreVerde">
+             <img  height="15%" width="12%" alt="Instituto Tecnológico de Toluca" src="Imagenes/cuidado.png">
+             <label id="titulo" >AVISO IMPORTANTE</label>
+ 
+             <fieldset id="datos_emergentesSObreVerde">
+                 <br>
+                 <label id="etqsobreVerde"></label>
+ 
+ 
+             </fieldset>
+ 
+             <input type="button" id="btn_aceptarSobreVerde" name="btn_aceptarSobreVerde" value="Aceptar" class="botonesEmergente">
+         </div>-->
         <div id="fondoSobreVerde"></div> 
 
     </body>

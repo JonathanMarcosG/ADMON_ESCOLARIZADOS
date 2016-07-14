@@ -14,6 +14,8 @@ public class ConfigurarPeriodo implements java.io.Serializable {
     private String FechaFin;
     private String periodo;
     private String mensaje = "";
+    private String msjError;
+    private int codError;
     boolean valido = true;
     boolean diferente = true;
 
@@ -152,6 +154,34 @@ public class ConfigurarPeriodo implements java.io.Serializable {
      */
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
+    }
+
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
     }
 
 }

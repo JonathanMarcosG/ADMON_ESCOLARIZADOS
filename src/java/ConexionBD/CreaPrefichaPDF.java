@@ -6,7 +6,7 @@
 package ConexionBD;
 
 import Beans.PrefichaModel;
-import DAO.VerificaExistenciaDAO;
+import DAO.VerificaDAO;
 import Utils.Constants;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -37,7 +37,9 @@ import javax.servlet.ServletContext;
 public class CreaPrefichaPDF {
 
     public ByteArrayOutputStream ElaboraPreficha(String curp, ServletContext d) throws IOException {
-        PrefichaModel prefichaR = VerificaExistenciaDAO.recuperaPreficha(Constants.BD_NAME, Constants.BD_PASS, curp);
+        System.out.println("Elaborando preficha....");
+        
+        PrefichaModel prefichaR = VerificaDAO.recuperaPreficha(Constants.BD_NAME, Constants.BD_PASS, curp);
         Paragraph vacio = new Paragraph("  ", FontFactory.getFont("arial", 10, Font.BOLD));
         vacio.setAlignment(Element.ALIGN_CENTER);
         Document preficha = new Document();

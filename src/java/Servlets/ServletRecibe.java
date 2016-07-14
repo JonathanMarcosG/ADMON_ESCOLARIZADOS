@@ -1,8 +1,10 @@
 package Servlets;
 
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.DatosPdf_DAO;
 import PDF.CrearPDF_Ficha;
 import PDF.Encripta;
+import Utils.Constants;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
@@ -29,10 +31,11 @@ public class ServletRecibe extends HttpServlet {
         String absolute_url_logo = getServletContext().getRealPath(url_logo);
         try {
 
-            IngresoAbd in = new IngresoAbd(user, pass);
+//            IngresoAbd in = new IngresoAbd(user, pass);
             
             CrearPDF_Ficha nuevoPDF = new CrearPDF_Ficha();
-            nuevoPDF.generarPDF(response.getOutputStream(), in.datos_pdfAspirante(folioCD), absolute_url_logo);
+//            nuevoPDF.generarPDF(response.getOutputStream(), in.datos_pdfAspirante(folioCD), absolute_url_logo);
+            nuevoPDF.generarPDF(response.getOutputStream(), DatosPdf_DAO.datos_pdfAspirante(Constants.BD_NAME,Constants.BD_PASS,folioCD), absolute_url_logo);
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(ServletRecibe.class.getName()).log(Level.SEVERE, null, ex);

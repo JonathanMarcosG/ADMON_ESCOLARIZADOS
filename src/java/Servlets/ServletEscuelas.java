@@ -6,6 +6,7 @@
 package Servlets;
 
 import Beans.Escuelas;
+import DAO.AltaEscuelaDAO;
 import DAO.InsercionesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,7 +63,7 @@ public class ServletEscuelas extends HttpServlet {
         esc.setNombre(nombre);
         esc.setDomicilio(domicilio);
         
-        String msjError=InsercionesDAO.altaEscuela(esc, usuario, contra);
+        String msjError=AltaEscuelaDAO.altaEscuela(esc, usuario, contra);
         out.print(msjError);
         
 //        IngresoAbd bd = new IngresoAbd(usuario,contra);

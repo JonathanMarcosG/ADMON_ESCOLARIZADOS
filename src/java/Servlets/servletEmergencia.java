@@ -8,8 +8,9 @@ package Servlets;
 import Beans.EnEmergencia;
 import Beans.ListaCarreras;
 import Beans.SelectCarreras;
-import ConexionBD.IngresoAbd;
-import DAO.CatalogosDAO;
+//import ConexionBD.IngresoAbd;
+import DAO.CierreProcesoDAO;
+import Utils.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -42,52 +43,55 @@ public class servletEmergencia extends HttpServlet {
         List<SelectCarreras> estado = new ArrayList<SelectCarreras>();
         List<SelectCarreras> municipio = new ArrayList<SelectCarreras>();
 
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        ee = bd.obtenerDatosCE(aspirante);
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        ee = bd.obtenerDatosCE(aspirante);
+        ee = CierreProcesoDAO.obtenerDatosCE(usuario, contra, aspirante);
 
-      try {
-            if (bd.getErrorInsert().contentEquals("ninguno")) {
-
+//        try {
+//            if (bd.getErrorInsert().contentEquals("ninguno")) {
+            if (ee.getCodError()==0) {
                 ListaCarreras opcns = new ListaCarreras();
-                List<SelectCarreras> opcio = bd.llenaOpcionesCarreras(aspirante);
-
-                opcio = CatalogosDAO.llenarListas(usuario,contra,2, 0);
+//                List<SelectCarreras> opcio = bd.llenaOpcionesCarreras(aspirante);
+                List<SelectCarreras> opcio;
+                opcio = CierreProcesoDAO.llenarListas(usuario, contra, 2, 0);
 //                opcio = bd.llenarListas(2, 0);
-                if(ee.getEstado() == null){
+                if (ee.getEstado() == null) {
                     ee.setEstado("0");
                 }
                 int idEstado = Integer.parseInt(ee.getEstado());
                 opcns.comparar(opcio, estado, idEstado);
                 opcns.AgregarOpciones(opcio, estado, idEstado);
 
-                opcio = CatalogosDAO.llenarListas(usuario,contra,3, idEstado);
+                opcio = CierreProcesoDAO.llenarListas(usuario, contra, 3, idEstado);
 //                opcio = bd.llenarListas(3, idEstado);
                 int mun = Integer.parseInt(ee.getCiudad());
                 opcns.comparar(opcio, municipio, mun);
                 opcns.AgregarOpciones(opcio, municipio, mun);
+                out.print(ee.getMsjError());
+            }else{
+                out.print(error(ee.getCodError()));
             }
-            out.print(bd.getErrorInsert());
-        } catch (IndexOutOfBoundsException e) {
-
-            if (!bd.getErrorInsert().contentEquals("ninguno")) {
-                out.print(bd.getErrorInsert() + "/Error al llenar listas de datos pesonales");
-            } else {
-                out.print("Error al llenar listas de datos personales");
-            }
-        }catch (NumberFormatException nf){
-              if (!bd.getErrorInsert().contentEquals("ninguno")) {
-                out.print(bd.getErrorInsert() + "/Error al llenar listas de datos pesonales");
-            } else {
-                out.print("Error al llenar listas de datos personales");
-            }
-        }catch (NullPointerException ede) {
-            if (!bd.getErrorInsert().contentEquals("ninguno")) {
-                out.print(bd.getErrorInsert() + "/Error al llenar listas de datos pesonales");
-            } else {
-                out.print("Error al llenar listas de datos personales");
-            }
-        }
             
+//        } catch (IndexOutOfBoundsException e) {
+//
+//            if (!bd.getErrorInsert().contentEquals("ninguno")) {
+//                out.print(bd.getErrorInsert() + "/Error al llenar listas de datos pesonales");
+//            } else {
+//                out.print("Error al llenar listas de datos personales");
+//            }
+//        } catch (NumberFormatException nf) {
+//            if (!bd.getErrorInsert().contentEquals("ninguno")) {
+//                out.print(bd.getErrorInsert() + "/Error al llenar listas de datos pesonales");
+//            } else {
+//                out.print("Error al llenar listas de datos personales");
+//            }
+//        } catch (NullPointerException ede) {
+//            if (!bd.getErrorInsert().contentEquals("ninguno")) {
+//                out.print(bd.getErrorInsert() + "/Error al llenar listas de datos pesonales");
+//            } else {
+//                out.print("Error al llenar listas de datos personales");
+//            }
+//        }
 
         HttpSession session = request.getSession(true);
 
@@ -95,6 +99,21 @@ public class servletEmergencia extends HttpServlet {
         session.setAttribute("edoE", estado);
         session.setAttribute("munE", municipio);
 
+    }
+    public String error(int error) {
+        String mensaje = "";
+        switch (error) {
+            case -1:
+                mensaje = Constants.ERROR4;
+                break;
+            case -2:
+                mensaje = Constants.ERROR3;
+                break;
+            case -3:
+                mensaje = Constants.ERROR2;
+                break;
+        }
+        return mensaje;
     }
 
     @Override

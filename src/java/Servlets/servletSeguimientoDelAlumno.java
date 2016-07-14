@@ -6,7 +6,8 @@
 package Servlets;
 
 import Beans.SeguimientoDelAlumno;
-import ConexionBD.IngresoAbd;
+import DAO.SeguimientoAspiranteDAO;
+import Utils.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -34,49 +35,40 @@ public class servletSeguimientoDelAlumno extends HttpServlet {
         String parametroInicial = request.getParameter("parametroInicial");
         int bandera = Integer.parseInt(request.getParameter("bandera"));
 
-        SeguimientoDelAlumno sda = new SeguimientoDelAlumno();
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
+        SeguimientoDelAlumno sda = SeguimientoAspiranteDAO.obtenerSeguimiento(usuario, contra, parametroInicial, bandera);
 
-        sda = bd.obtenerSeguimiento(parametroInicial, bandera);
-
-        try {
-
-            HttpSession session = request.getSession(true);
-            session.setAttribute("seguimiento", sda);
-           
-            if (bd.getErrorInsert().contentEquals("ninguno")) {
+        HttpSession session = request.getSession(true);
+        if (sda != null) {
+            if (sda.getCodError() == 0) {
+                session.setAttribute("seguimiento", sda);
                 out.print("bien/" + sda.getRegPreficha()
                         + "/" + sda.getPago()
                         + "/" + sda.getAltaCeneval()
                         + "/" + sda.getFolioCeneval() + ""
                         + "/" + sda.getRegFicha());
-                //System.out.println("Seguimiento de Aspirantes:\n"+sda.getCorreo()+"-> bien/" + sda.getRegPreficha()
-//                        + "/" + sda.getPago()
-//                        + "/" + sda.getAltaCeneval()
-//                        + "/" + sda.getFolioCeneval() + ""
-//                        + "/" + sda.getRegFicha());
             } else {
-                out.print(bd.getErrorInsert());
-
-            }
-        } catch (IndexOutOfBoundsException e) {
-
-            if (!bd.getErrorInsert().contentEquals("ninguno")) {
-                out.print(bd.getErrorInsert() + "/No se encontraron resultados");
-            } else {
-                out.print("No se encontraron resultados");
-
-            }
-        } catch (NumberFormatException ee) {
-            if (!bd.getErrorInsert().contentEquals("ninguno")) {
-
-                out.print(bd.getErrorInsert() + "/No se encontraron resultados");
-
-            } else {
-                out.print("No se encontraron resultados");
-
+                out.print(error(sda.getCodError()));
             }
         }
+    }
+
+    public String error(int error) {
+        String mensaje = "";
+        switch (error) {
+            case -1:
+                mensaje = Constants.ERROR4;
+                break;
+            case -2:
+                mensaje = Constants.ERROR3;
+                break;
+            case -3:
+                mensaje = Constants.ERROR2;
+                break;
+            default:
+                mensaje = "Se produjo un error al generar la ficha.";
+                break;
+        }
+        return mensaje;
     }
 
     @Override

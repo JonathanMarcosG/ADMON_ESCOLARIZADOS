@@ -11,6 +11,8 @@ package Beans;
  */
 public class DatosDelDomicilio {
 
+    private int codError;
+    private String msjError;
     private int estadoFK;
     private String estado;
     private String municipio;
@@ -192,6 +194,32 @@ public class DatosDelDomicilio {
         this.preficha = preficha;
     }
 
-   
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
+    }
 
 }

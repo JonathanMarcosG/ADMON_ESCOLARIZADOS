@@ -31,6 +31,7 @@ public class PrefichaPDF extends HttpServlet {
         response.setContentType("application/pdf");
         String curp = request.getParameter("curp");
         CreaPrefichaPDF preficha = new CreaPrefichaPDF();
+        System.out.println("estro de este lado");
         ByteArrayOutputStream baos=preficha.ElaboraPreficha(curp, d);
         sendDocument(response, baos);
     }

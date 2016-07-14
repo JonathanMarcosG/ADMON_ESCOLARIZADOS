@@ -5,7 +5,9 @@
  */
 package Servlets;
 
-import Beans.ClaseEnviarCorreo;
+import Beans.BMail;
+import Models.ClaseEnviarCorreo;
+import Models.CuerpoCorreos;
 import PDF.Encripta;
 import Utils.Constants;
 import java.io.IOException;
@@ -35,7 +37,7 @@ public class servletReenvioLiga extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-   
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,50 +57,17 @@ public class servletReenvioLiga extends HttpServlet {
 
             ServletContext d = getServletContext();
             String correo = request.getParameter("correo");
-      Encripta e = new Encripta();
-           
-            String email=e.encryptURL(correo.trim());
-       
-            String url = Constants.HOME_ASP+"/Datos_Aspirante.jsp?correo=" + email;
-            ClaseEnviarCorreo cec = new ClaseEnviarCorreo();
-            cec.setCorreo(correo);
-            cec.setAsunto("Aspirante Tecnológico de Toluca: Liga para Registro");
             
-            cec.setCuerpo("<b><font size=4 face=\"arialblack\" >"
-                            + " Durante el proceso de registro recibirá los  siguientes  correos, por favor permanezca al pendiente: \n"
-                            + "<br><br>"
-                            + " 1.-Correo  de generación de preficha, que se le enviará  al concluir el registro de sus datos. \n"
-                            + "<br>"
-                            + "2.-Correo de liberación de pago, en un periodo máximo de 3 a 4 días hábiles después de haber realizado el pago bancario. \n"
-                            + "<br>"
-                            + "3.-Correo de alta en Ceneval, máximo 2 días  hábiles después del correo anterior. Es importante que reciba estos dos últimos correos. \n "
-                            + "<br>"
-                            + "4.-Correo de generación de ficha, que le será  enviado  al concluir el proceso de registro, esto  después de haber entregado sus papeles en el departamento de servicios escolares edif. X \n"
-                            + "<br><br>"
-                            + "En caso de no recibir alguno de ellos, comuníquese con nostros desde:  "
-                            + "<br>"
-                            + "<a href=\""+ Constants.HOME_ASP + "\" target=\"_blank\">" + Constants.HOME_ASP + " </a>  en el apartado de contacto.</font></b>"
-                            + "<br><br>"
-                            + "<b><ins>Importante:</ins><b> Para realizar cualquier cambio en los datos proporcionados deberá solicitarlo en ventanilla al"
-                            + " momento de entregar su documentación en el departamento de Servicios Escolares Edif. X. Así mismo deberá recordar que no habrá cambios en  las opciones de carrera."
-                            + "Tome en cuenta que es responsabilidad del aspirante cumplir con todas etapas del proceso\n"
-                            + "para finalizar su registro de lo contrario su solicitud será rechazada."
-                            + "<br><br>"
-                            + "<b><ins>Advertencia:</ins></b> ES IMPORTANTE QUE CONSIDERE QUE UNA VEZ FINALIZADO SU REGISTRO TENDRÁ DOS DÍAS HÁBILES PARA REALIZAR SU PAGO, DE LO CONTRARIO SU REFERENCIA EXPIRARÁ. \n" +
-"En caso de que su referencia  expire usted podrá renovarla ingresando  a la liga de <a href=\""+ Constants.HOME_ASP + "\" target=\"_blank\">" + Constants.HOME_ASP + " </a> en el apartado de \"Renovar referencia\" considerando que:"
-                            + "<br><br>"
-                            + "<u1>"
-                            + "<li>Al realizar su registro y no realizar el pago oportuno de su preficha  su lugar en el tecnológico  no será contemplado.</li>"
-                            + "<li>La renovación de  referencia  está sujeta a la disponibilidad de cupo en el tecnológico.</li>"
-                            + "<li>El aspirante  tendrá hasta dos oportunidades para renovar su referencia.</li>"
-                            + "<li>El aspirante tendrá un día hábil para realizar el pago de su preficha después de renovar su referencia. </li>"
-                            + "</u1>"
-                            + "<br><br>"
-                            + "Para continuar con su registro por favor haga click en el siguiente enlace. "
-                            + "<a href=" + url + " >  Registro Aspirante </a></font>."
-);
-            cec.sendFromMail(d);
-            out.print(cec.getError());
+            Encripta e = new Encripta();
+            String email = e.encryptURL(correo.trim());
+            String url = Constants.HOME_ASP + "/Datos_Aspirante.jsp?correo=" + email;
+            
+            BMail beanMail = new CuerpoCorreos().ligaRegistro(url);
+            
+            ClaseEnviarCorreo cec = new ClaseEnviarCorreo();
+            boolean band = cec.sendMail(d, correo, beanMail.getCuerpo(), Constants.MAIL_ASUNTO_LIGA_REGISTRO);
+            out.print(band);
+            
         } catch (Exception ex) {
             Logger.getLogger(servletReenvioPref.class.getName()).log(Level.SEVERE, null, ex);
         }

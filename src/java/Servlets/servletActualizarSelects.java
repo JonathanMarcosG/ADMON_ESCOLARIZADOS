@@ -8,8 +8,8 @@ package Servlets;
 import Beans.ListaCarreras;
 import Beans.SelectCarreras;
 import Beans.UnirListas;
-import ConexionBD.IngresoAbd;
-import DAO.CatalogosDAO;
+//import ConexionBD.IngresoAbd;
+import DAO.CierreProcesoDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,10 +38,10 @@ public class servletActualizarSelects extends HttpServlet {
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
 
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
 
         ListaCarreras opcns = new ListaCarreras();
-        List<SelectCarreras> opcio = CatalogosDAO.llenarListas(usuario,contra,10, 0);
+        List<SelectCarreras> opcio = CierreProcesoDAO.llenarListas(usuario,contra,10, 0);
 //        List<SelectCarreras> opcio = bd.llenarListas(10, 0);
 
         List<SelectCarreras> op1 = new ArrayList();

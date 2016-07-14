@@ -10,6 +10,8 @@ package Beans;
  * @author David
  */
 public class confConv {
+    private int codError;
+    private String msjError;
     private String metaReal;
     private String metaEstablecida;
     private String fechaIpre;
@@ -115,5 +117,33 @@ public class confConv {
      */
     public void setFechaFpre(String fechaFpre) {
         this.fechaFpre = fechaFpre;
+    }
+
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
     }
 }

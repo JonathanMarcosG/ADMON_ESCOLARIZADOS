@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import ConexionBD.IngresoAbd;
 import DAO.InsercionesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;

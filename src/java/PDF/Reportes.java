@@ -5,7 +5,7 @@
  */
 package PDF;
 
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
 import DAO.ReportesDAO;
 import Utils.Constants;
 import com.itextpdf.text.BadElementException;
@@ -889,7 +889,7 @@ public class Reportes {
 
     public static PdfPTable statusfichas(String usuario, String contra) throws DocumentException {
 
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
         List<Beans.Reportes> reportes;
         reportes = ReportesDAO.statusFichas(usuario, contra);
 //        reportes = bd.statusFichas();

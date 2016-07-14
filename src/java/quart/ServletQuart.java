@@ -5,13 +5,12 @@
  */
 package quart;
 
-
 import Beans.Fechas;
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.VerificaDAO;
 import Utils.Constants;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 /**
  *
@@ -31,64 +30,69 @@ import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
 public class ServletQuart implements ServletContextListener {
-        Scheduler scheduler = null;
 
-        @Override
-        public void contextInitialized(ServletContextEvent servletContext) {
-                System.out.println("Context Initialized");
-                IngresoAbd bd= new IngresoAbd(Constants.userT,Constants.passT);
-                bd.vigenciaConvoc();
-                String[] fin=bd.getFechaF().split("/");
-                 String[] inicio=bd.getFechaI().split("/");
-                 
-                 if(fin.length>1 && inicio.length>1){
-                   
-                Fechas dates= new Fechas();
-                String dias="";
-                String mesF=dates.fechasConvoc(fin[1]);
-                String diaF=dates.fechasConvoc(fin[0]);
-                String mesI=dates.fechasConvoc(inicio[1]);
-                String diaI=dates.fechasConvoc(inicio[0]);
-                int monthI=Integer.parseInt(mesI);
-                int monthF=Integer.parseInt(mesF);
-                if((monthF-monthI)==0){
-                    dias=diaI+"-"+diaF;
-                    
-                }else{
-                    dias="1-31";
-                }
-              
-                            // Setup the Job class and the Job group
-                        JobDetail job = newJob(TriggerCorreos.class).withIdentity(
-                                        "CronQuartzJob", "Group").build();
+    Scheduler scheduler = null;
 
-                        
-                        Trigger trigger = newTrigger()
-                        .withIdentity("TriggerName", "Group")
-                        .withSchedule(CronScheduleBuilder.cronSchedule("0 0 1 "+dias+" "+mesI+"-"+mesF+" ?"))
-                        .build();
+    @Override
+    public void contextInitialized(ServletContextEvent servletContext) {
+        System.out.println("99999999999999999999999999 Context Initialized");
+//                IngresoAbd bd= new IngresoAbd(Constants.userT,Constants.passT);
+        String[] fechas = VerificaDAO.vigenciaConvoc(Constants.BD_NAME, Constants.BD_PASS).split("&");
+        String[] inicio = fechas[0].split("/");
+        System.out.println(inicio.length);
+        String[] fin = fechas[1].split("/");
+        System.out.println(fin.length);
+//                bd.vigenciaConvoc();
+//                String[] fin=bd.getFechaF().split("/");
+//                 String[] inicio=bd.getFechaI().split("/");
+
+        if (fin.length > 1 && inicio.length > 1) {
+
+            Fechas dates = new Fechas();
+            String dias = "";
+            String mesF = dates.fechasConvoc(fin[1]);
+            String diaF = dates.fechasConvoc(fin[0]);
+            String mesI = dates.fechasConvoc(inicio[1]);
+            String diaI = dates.fechasConvoc(inicio[0]);
+            int monthI = Integer.parseInt(mesI);
+            int monthF = Integer.parseInt(mesF);
+            if ((monthF - monthI) == 0) {
+                dias = diaI + "-" + diaF;
+
+            } else {
+                dias = "1-31";
+            }
+
+            // Setup the Job class and the Job group
+            JobDetail job = newJob(TriggerCorreos.class).withIdentity(
+                    "CronQuartzJob", "Group").build();
+
+            Trigger trigger = newTrigger()
+                    .withIdentity("TriggerName", "Group")
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0 0 1 " + dias + " " + mesI + "-" + mesF + " ?"))
+                    .build();
 
             try {
                 // Setup the Job and Trigger with Scheduler & schedule jobs
                 scheduler = new StdSchedulerFactory().getScheduler();
-                 scheduler.start();
-                        scheduler.scheduleJob(job, trigger);
+                scheduler.start();
+                scheduler.scheduleJob(job, trigger);
             } catch (SchedulerException ex) {
                 Logger.getLogger(ServletQuart.class.getName()).log(Level.SEVERE, null, ex);
             }
-                 }          
-               
         }
 
-        @Override
-        public void contextDestroyed(ServletContextEvent servletContext) {
-                System.out.println("Context Destroyed");
-               
-            try {
-                scheduler.shutdown();
-            } catch (SchedulerException ex) {
-                Logger.getLogger(ServletQuart.class.getName()).log(Level.SEVERE, null, ex);
-            }
-               
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContext) {
+        System.out.println("Context Destroyed");
+
+        try {
+            scheduler.shutdown();
+        } catch (SchedulerException ex) {
+            Logger.getLogger(ServletQuart.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
 }

@@ -13,7 +13,8 @@ package Beans;
  * @author Rocio
  */
 public class EscuelaProcedencia {
-    
+    private int codError;
+    private String msjError;
     private String idAspirante;
     private String clasificacion;
     private String estadoFK;
@@ -160,6 +161,34 @@ public class EscuelaProcedencia {
 
     public void setNomMpio(String nomMpio) {
         this.nomMpio = nomMpio;
+    }
+
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
     }
     
     

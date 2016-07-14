@@ -85,9 +85,9 @@ pide fecha de inicio y fecha de fin
        <input type="hidden" id="docs" value="${convo.getFechaEntrega()}"/>
        <input type="hidden" id="inPre" value="${convo.getFechaIpre()}"/>
        <input type="hidden" id="finPre" value="${convo.getFechaFpre()}"/>
-       <input type="button" href="#" class="botonsillos" onclick="returnCasp();" value="Atrás" />
-     <input id="btn_confirmar" type="button" class="botonsillos" value="Guardar">
-     <input id="btn_cancelar" type="button" class="botonsillos" value="Limpiar" onclick="limpiarCampos();">
+       <input type="button" href="#" class="btn_style2" onclick="returnCasp();" value="Atrás" />
+     <input id="btn_confirmar" type="button" class="btn_style2" value="Guardar">
+     <input id="btn_cancelar" type="button" class="btn_style2" value="Limpiar" onclick="limpiarCampos();">
      
      <br>
     </div>

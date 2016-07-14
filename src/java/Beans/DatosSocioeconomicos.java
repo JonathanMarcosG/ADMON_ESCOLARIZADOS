@@ -11,6 +11,8 @@ package Beans;
  * @author Rocio
  */
 public class DatosSocioeconomicos {
+    private int codError;
+    private String msjError;
     private String nomPadre;
     private String nomMadre;
     private String vivePadre;
@@ -299,6 +301,34 @@ public class DatosSocioeconomicos {
      */
     public void setDependeDe(String dependeDe) {
         this.dependeDe = dependeDe;
+    }
+
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
     }
 
     

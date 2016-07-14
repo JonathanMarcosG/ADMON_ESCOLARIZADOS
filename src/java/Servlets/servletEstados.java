@@ -6,8 +6,8 @@
 package Servlets;
 
 import Beans.SelectCarreras;
-import ConexionBD.IngresoAbd;
-import DAO.CatalogosDAO;
+//import ConexionBD.IngresoAbd;
+import DAO.CierreProcesoDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,8 +33,8 @@ public class servletEstados extends HttpServlet implements Serializable {
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
 
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        List<SelectCarreras> opcio = CatalogosDAO.llenarListas(usuario,contra,2, 0);
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+        List<SelectCarreras> opcio = CierreProcesoDAO.llenarListas(usuario,contra,2, 0);
 //        List<SelectCarreras> opcio = bd.llenarListas(2, 0);
         SelectCarreras sc = new SelectCarreras();
         sc.setClaveCarrera(0);

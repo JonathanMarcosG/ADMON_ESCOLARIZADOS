@@ -6,7 +6,8 @@
 package Servlets;
 
 import Beans.EnEmergencia;
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.ActualizarDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,10 +30,11 @@ public class servletGuardarCE extends HttpServlet {
         request.setCharacterEncoding("UTF8");
         PrintWriter out = response.getWriter();
         EnEmergencia ee = new EnEmergencia();
+        int opcion = Integer.parseInt(request.getParameter("opcion"));
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
         String preficha = request.getParameter("preficha");
-        
+
         String nombre = request.getParameter("nom").trim();
         String estado = request.getParameter("estado").trim();
         String municipio = request.getParameter("municipio").trim();
@@ -57,13 +59,21 @@ public class servletGuardarCE extends HttpServlet {
         ee.setTelfijo(telFijo);
         ee.setTelcel(telCel);
         ee.setPreficha(preficha);
-        
-        IngresoAbd bd = new IngresoAbd(usuario,contra);
-        
-        bd.actualizarCE(ee);
-        out.print(bd.getErrorInsert());
+        String msjError = "";
         HttpSession session = request.getSession(true);
-        session.setAttribute("emergencia", ee);
+        switch (opcion) {
+            case 0:
+                msjError="correcto";
+                break;
+            case 1:
+                String[] resultado = ActualizarDAO.actualizarCE(usuario, contra, ee).split("&");
+                msjError = resultado[0];
+                if (Integer.parseInt(resultado[1]) == 0) {
+                    session.setAttribute("emergencia", ee);
+                }
+                break;
+        }
+        out.print(msjError);
     }
 
     @Override

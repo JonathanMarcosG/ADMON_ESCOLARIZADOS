@@ -6,7 +6,9 @@
 package Servlets;
 
 import Beans.FolioCENEVAL;
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.ActualizarDAO;
+import Utils.Constants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,16 +34,33 @@ public class servletFCENEVAL extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String idAspirante = request.getParameter("aspirante");
-     
+
         String folio = request.getParameter("folio");
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
 
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        bd.insertarCeneval(idAspirante, folio);
+        String[] mensaje = ActualizarDAO.insertarCeneval(usuario, contra, idAspirante, folio).split("&");
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        bd.insertarCeneval(idAspirante, folio);
+        int codMensaje=Integer.parseInt(mensaje[1]);
+        if (codMensaje!= 0) {
+            switch(codMensaje){
+                case -1:
+                    out.print(Constants.ERROR5);
+                    break;
+                case -2:
+                    out.print(Constants.ERROR2);
+                    break;
+                case -3:
+                    out.print(Constants.ERROR3);
+                    break;                          
+            }
+        } else {
+            out.print(mensaje[0]);
+        }
         FolioCENEVAL fC = new FolioCENEVAL();
         fC.setFolioCENEVAL(folio);
-        out.print(bd.getErrorInsert());
+//        out.print(bd.getErrorInsert());
         HttpSession session = request.getSession(true);
         session.setAttribute("folioCeneval", fC);
     }

@@ -14,6 +14,8 @@ import java.util.Date;
  */
 public class DatosPersonales {
     
+    private String msjError;
+    private int codError;
     private int preficha; 
     private String matricula=" ";
     private String folio_ceneval=" ";
@@ -388,6 +390,34 @@ public class DatosPersonales {
      */
     public void setLibCeneval(String libCeneval) {
         this.libCeneval = libCeneval;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
+    }
+
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
     }
 
   

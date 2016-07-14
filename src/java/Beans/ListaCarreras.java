@@ -77,6 +77,7 @@ public class ListaCarreras {
         }
         return num;
     }
+
     public List<SelectCarreras> llenaNumCuartos() {
         List<SelectCarreras> num = new ArrayList<>();
         SelectCarreras b;
@@ -90,23 +91,23 @@ public class ListaCarreras {
         num.add(b);
         return num;
     }
+
     public List<SelectCarreras> llenaNumCuartos(String clave) {
         List<SelectCarreras> num = new ArrayList<>();
         SelectCarreras b;
-          b = new SelectCarreras();
-        if(clave.contentEquals("1 A 5")){
-             
-        b.setIdPais("mas 5");
-        b.setNombre("Mas de 5");
-        num.add(b);
-        }else{
-           
-        b.setIdPais("1 a 5");
-        b.setNombre("1 a 5");
-        num.add(b);
+        b = new SelectCarreras();
+        if (clave.contentEquals("1 A 5")) {
+
+            b.setIdPais("mas 5");
+            b.setNombre("Mas de 5");
+            num.add(b);
+        } else {
+
+            b.setIdPais("1 a 5");
+            b.setNombre("1 a 5");
+            num.add(b);
         }
-       
-       
+
         return num;
     }
 
@@ -487,6 +488,9 @@ public class ListaCarreras {
         }
     }
 
+    public void agregarExtranjero(List<SelectCarreras> op){
+        
+    }
     public void AgregarOpciones(List<SelectCarreras> opcio, List<SelectCarreras> op, int clave1) {
         if (!(op.get(0).getClaveCarrera() == 0)) {
             for (int j = 0; j < opcio.size(); j++) {
@@ -545,6 +549,7 @@ public class ListaCarreras {
             }
         }
     }
+
     public void compararPais2(List<SelectCarreras> opcio, List<SelectCarreras> op, String clave) {
 
         for (int j = 0; j < opcio.size(); j++) {
@@ -563,9 +568,10 @@ public class ListaCarreras {
             op.add(0, b);
         }
     }
-      public void AgregarOpcionesPais2(List<SelectCarreras> opcio, List<SelectCarreras> op, String clave1) {
-          System.out.println(opcio.size());
-          if (!(op.get(0).getIdPais().contentEquals("error"))) {
+
+    public void AgregarOpcionesPais2(List<SelectCarreras> opcio, List<SelectCarreras> op, String clave1) {
+//        System.out.println(opcio.size());
+        if (!(op.get(0).getIdPais().contentEquals("error"))) {
             for (int j = 0; j < opcio.size(); j++) {
 
                 if (!(opcio.get(j).getIdPais().contentEquals(op.get(0).getIdPais()))) {
@@ -584,4 +590,3 @@ public class ListaCarreras {
         }
     }
 }
-

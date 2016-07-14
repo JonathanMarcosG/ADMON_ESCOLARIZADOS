@@ -9,15 +9,17 @@ package Beans;
  *
  * @author Rocio
  */
-public class SelectCarreras implements java.io.Serializable{
+public class SelectCarreras implements java.io.Serializable {
 
-  private int claveCarrera;
-  private String nombre;
-  private String idPais;
+    private int codError;
+    private String msjError;
+    private int claveCarrera;
+    private String nombre;
+    private String idPais;
 
-  
-  public SelectCarreras(){}  
-  
+    public SelectCarreras() {
+    }
+
     /**
      * @return the claveCarrera
      */
@@ -58,6 +60,34 @@ public class SelectCarreras implements java.io.Serializable{
      */
     public void setIdPais(String idPais) {
         this.idPais = idPais;
+    }
+
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
     }
 
 }

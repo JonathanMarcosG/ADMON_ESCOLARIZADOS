@@ -7,7 +7,8 @@ package Servlets;
 
 import Beans.DatosDelDomicilio;
 import Beans.DatosSocioeconomicos;
-import ConexionBD.IngresoAbd;
+//import ConexionBD.IngresoAbd;
+import DAO.ActualizarDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -31,6 +32,7 @@ public class servletGuardarSE extends HttpServlet {
         PrintWriter out = response.getWriter();
         DatosDelDomicilio ddd = new DatosDelDomicilio();
         DatosSocioeconomicos ds = new DatosSocioeconomicos();
+
         int opcion = Integer.parseInt(request.getParameter("opcion"));
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contra");
@@ -41,37 +43,43 @@ public class servletGuardarSE extends HttpServlet {
         String localidad = request.getParameter("localidadDomicilio").trim();
         String colonia = request.getParameter("colonia").trim();
         String calle = request.getParameter("calle").trim();
+
         String numExterior = request.getParameter("numExterior").trim();
         String numInterior = request.getParameter("numInterior").trim();
         String cp = request.getParameter("cp").trim();
         String telCel = request.getParameter("telCel").trim();
         String telFijo = request.getParameter("telFijo").trim();
 
-        String beca = request.getParameter("beca");
-
         String padre = request.getParameter("padre");
         String vivePadre = request.getParameter("vivePadre");
-        String zonaProcedencia = request.getParameter("zonaProcedencia");
-        String maxEstudiosPadre = request.getParameter("maxEstudiosPadre");
-        String maxEstudiosMadre = request.getParameter("maxEstudiosMadre");
-        String ingresosTotales = request.getParameter("ingresosTotales");
-        String depEconomicamente = request.getParameter("DependeDe");
         String ocupacionPa = request.getParameter("ocupacionPa");
-        String ocupacionMa = request.getParameter("ocupacionMa");
+
         String madre = request.getParameter("madre");
         String viveMadre = request.getParameter("viveMadre");
+        String ocupacionMa = request.getParameter("ocupacionMa");
+
+        String maxEstudiosPadre = request.getParameter("maxEstudiosPadre");
+        String maxEstudiosMadre = request.getParameter("maxEstudiosMadre");
+
+        String zonaProcedencia = request.getParameter("zonaProcedencia");
         String tipoCasa = request.getParameter("tipoCasa");
+        String DependeDe = request.getParameter("depEconomicamente");
+
+        String viveCon = request.getParameter("viveCon");
+        String beca = request.getParameter("beca");
+        String ingresosTotales = request.getParameter("ingresosTotales");
+
+        String oportunidades = request.getParameter("oportunidades");
         String noPersonasCasa = request.getParameter("noPersonasCasa");
         String noCuartos = request.getParameter("noCuartos");
-        String oportunidades = request.getParameter("oportunidades");
-        String viveCon = request.getParameter("viveCon");
-        String DependeDe = request.getParameter("depEconomicamente");
+        String depEconomicamente = request.getParameter("DependeDe");
 
         ddd.setEstado(estado);
         ddd.setMunicipio(municipio);
         ddd.setLocalidad(localidad);
         ddd.setColonia(colonia);
         ddd.setCalle(calle);
+
         ddd.setNoExterior(Integer.parseInt(numExterior));
         ddd.setNoInterior(Integer.parseInt(numInterior));
         ddd.setCp(Integer.parseInt(cp));
@@ -79,44 +87,75 @@ public class servletGuardarSE extends HttpServlet {
         ddd.setTelFijo(telFijo);
         ddd.setPreficha(preficha);
 
-        ds.setBeca(beca);
         ds.setNomPadre(padre);
         ds.setVivePadre(vivePadre);
-        ds.setZonaProcedencia(zonaProcedencia);
-        ds.setMaxEstudiosPadre(Integer.parseInt(maxEstudiosPadre));
-        ds.setMaxEstudiosMadre(Integer.parseInt(maxEstudiosMadre));
-        ds.setIngresosTotales(ingresosTotales);
-        ds.setDependeEconomicamente(depEconomicamente);
         ds.setOcupacionPadre(Integer.parseInt(ocupacionPa));
-        ds.setOcupacionMadre(Integer.parseInt(ocupacionMa));
+
         ds.setNomMadre(madre);
         ds.setViveMadre(viveMadre);
+        ds.setOcupacionMadre(Integer.parseInt(ocupacionMa));
+
+        ds.setMaxEstudiosPadre(Integer.parseInt(maxEstudiosPadre));
+        ds.setMaxEstudiosMadre(Integer.parseInt(maxEstudiosMadre));
+
+        ds.setZonaProcedencia(zonaProcedencia);
         ds.setTipoCasa(tipoCasa);
+        ds.setDependeEconomicamente(depEconomicamente);
+
+        ds.setViveCon(viveCon);
+        ds.setBeca(beca);
+        ds.setIngresosTotales(ingresosTotales);
+
+        ds.setProgOportunidades(oportunidades);
         ds.setNoPersonasCasa(Integer.parseInt(noPersonasCasa));
         ds.setCuartosCasa(noCuartos);
         ds.setDependeDe(DependeDe);
-        ds.setProgOportunidades(oportunidades);
-        ds.setViveCon(viveCon);
+
         ds.setIdAspirante(Integer.parseInt(preficha));
 
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
-        String error = "1";
-        if (opcion == 0) {
-            error = "ninguno";
-        } else if (opcion == 1) {
-            bd.actualizarDD(ddd);
-            error = bd.getErrorInsert();
-        } else if (opcion == 2) {
-            bd.actualizarSE(ds);
-            error = bd.getErrorInsert();
-            System.out.println(error);
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
+        HttpSession session = request.getSession(true);
+        String[] resultado;
+        String error = "0";
+        switch (opcion) {
+            case 0:
+                error = "correcto";
+                break;
+            case 1:
+                resultado = ActualizarDAO.actualizarDD(usuario, contra, ddd).split("&");
+                if (Integer.parseInt(resultado[1]) == 0) {
+                    session.setAttribute("ddd", ddd);
+                    error = resultado[0];
+                }
+                //            bd.actualizarDD(ddd);
+                break;
+            case 2:
+//                bd.actualizarSE(ds);
+                resultado = ActualizarDAO.actualizarSE(usuario, contra, ds).split("&");
+                if (Integer.parseInt(resultado[1]) == 0) {
+                    session.setAttribute("dts", ds);
+                    error = resultado[0];
+                }
+//                error = bd.getErrorInsert();
+                break;
+            case 3:
+                resultado = ActualizarDAO.actualizarDD(usuario, contra, ddd).split("&");
+                if (Integer.parseInt(resultado[1]) == 0) {
+                    resultado = ActualizarDAO.actualizarSE(usuario, contra, ds).split("&");
+                    if (Integer.parseInt(resultado[1]) == 0) {
+                        session.setAttribute("ddd", ddd);
+                        session.setAttribute("dts", ds);
+                        error = resultado[0];
+                    }
+                }
+//                error = bd.getErrorInsert();
+                break;
+            default:
+                break;
         }
 
         out.print(error);
 
-        HttpSession session = request.getSession(true);
-        session.setAttribute("dts", ds);
-        session.setAttribute("ddd", ddd);
     }
 
     @Override

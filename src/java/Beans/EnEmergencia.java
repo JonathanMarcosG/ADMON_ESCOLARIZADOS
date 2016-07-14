@@ -11,7 +11,8 @@ package Beans;
  * @author Rocio
  */
 public class EnEmergencia {
-   
+   private int codError;
+   private String msjError;
     private String nomAp;
     private String ciudad;
     private String estado;
@@ -191,6 +192,34 @@ public class EnEmergencia {
      */
     public void setTelcel(String telcel) {
         this.telcel = telcel;
+    }
+
+    /**
+     * @return the codError
+     */
+    public int getCodError() {
+        return codError;
+    }
+
+    /**
+     * @param codError the codError to set
+     */
+    public void setCodError(int codError) {
+        this.codError = codError;
+    }
+
+    /**
+     * @return the msjError
+     */
+    public String getMsjError() {
+        return msjError;
+    }
+
+    /**
+     * @param msjError the msjError to set
+     */
+    public void setMsjError(String msjError) {
+        this.msjError = msjError;
     }
 
    

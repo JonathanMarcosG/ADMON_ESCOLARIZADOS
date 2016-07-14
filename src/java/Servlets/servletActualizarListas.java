@@ -7,8 +7,8 @@ package Servlets;
 
 import Beans.ListaCarreras;
 import Beans.SelectCarreras;
-import ConexionBD.IngresoAbd;
-import DAO.CatalogosDAO;
+//import ConexionBD.IngresoAbd;
+import DAO.CierreProcesoDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,9 +41,9 @@ public class servletActualizarListas extends HttpServlet {
         String aliasLista = request.getParameter("aliasLista");
         int filtro = Integer.parseInt(request.getParameter("filtro"));
        
-        IngresoAbd bd = new IngresoAbd(usuario, contra);
+//        IngresoAbd bd = new IngresoAbd(usuario, contra);
         ListaCarreras opcns = new ListaCarreras();
-        List<SelectCarreras> opcio = CatalogosDAO.llenarListas(usuario,contra,opcion, filtro);
+        List<SelectCarreras> opcio = CierreProcesoDAO.llenarListas(usuario,contra,opcion, filtro);
 //        List<SelectCarreras> opcio = bd.llenarListas(opcion, filtro);
 
         List<SelectCarreras> actualizar = new ArrayList();
@@ -58,7 +58,8 @@ public class servletActualizarListas extends HttpServlet {
 
         } else {
             if (opcion == 1) {
-                opcio = bd.llenarListaPais(opcion, filtro);
+                opcio = CierreProcesoDAO.llenarListaPais(usuario,contra,opcion, filtro);
+//                opcio = bd.llenarListaPais(opcion, filtro);
                 opcns.compararPais(opcio, actualizar, id);
                 opcns.AgregarOpcionesPais(opcio, actualizar, id);
             } else {
